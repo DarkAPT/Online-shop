@@ -1,0 +1,344 @@
+.content,
+.product-title{
+    display: flex;
+    background: rgb(255,255,255);
+}
+
+/* left nav-bar START */
+
+.left-bar{
+    display: flex;
+    flex-direction: column;
+    max-width: 15rem;
+    padding-left: 1rem;
+    padding-top: 2rem;
+}
+
+.filter{
+    padding-bottom: 2rem;
+}
+
+.filter label{
+    display: flex;
+    color: rgb(0, 119, 255);
+}
+
+.filter label:hover{
+    cursor: pointer;
+    color: gold;
+}
+
+.ft{
+    margin-bottom: 0.5rem;
+    color: rgb(34, 0, 255);
+}
+
+/* Price-slider styles*/
+
+.price-input{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    padding-right: 1rem;
+}
+
+.field{
+    padding-left: 0.5rem;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    border: 1px solid rgb(0, 119, 255);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.field span{
+    color: rgb(0, 119, 255);
+    font-size: 12px;
+}
+
+#field-min{
+    margin-right: 1rem;
+}
+
+.field input{
+    font-size: 12px;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    color: rgb(0, 119, 255);
+    margin-left: 0.25rem;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.input-min{
+    margin-right: 0.25rem;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.price-slider{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    height: 5px;
+    border-radius: 5px;
+    background-color: rgb(163, 206, 255);
+    position: relative;
+}
+
+.price-slider .progress{
+    left: 0%;
+    right: 0%;
+    height: 5px;
+    background-color: gold;
+    position: absolute;
+    border-radius: 5px;
+}
+
+.range-input{
+    position: relative;
+}
+
+.range-input input{
+    appearance: none;
+    padding-right: 1rem;
+    position: absolute;
+    top: -5px;
+    height: 5px;
+    width: 100%;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    background-color: gold;
+}
+
+/* CheckBox styles */
+
+.check-box {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.custom-checkbox{
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+
+.custom-checkbox::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid rgb(0, 119, 255);
+    border-radius: 0.25em;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+}
+
+.check-box:not(:checked) + .custom-checkbox:hover::before{
+    background-color: gold;
+    border-color: gold;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+    opacity: 50%;
+}
+
+.filter label:hover > .check-box:not(:checked) + .custom-checkbox::before{
+    background-color: gold;
+    border-color: gold;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+    opacity: 50%;
+}
+
+.check-box:checked + .custom-checkbox::before {
+    border-color: gold;
+    background-color: gold;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.check-box:checked ~ .condition{
+    color: gold;
+}
+/* left nav-bar END */
+
+/* main-content START */
+
+.main-content{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    width: 100%;
+}
+
+/* Order */
+
+.searchResultsSort{
+    display: flex;
+    width: 100%;
+    height: 2rem;
+}
+
+.orderBy{
+    margin-right: 1rem;
+    font-size: 18px;
+    height: 100%;
+    color: gold;
+}
+
+#select{
+    width: 13rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:100%;
+    color: rgb(0, 119, 255);
+    cursor: pointer;
+    position: relative;
+    padding-inline: 1rem;
+    border: 1px solid rgb(0, 119, 255);
+    border-radius: 5px;
+}
+
+#select p{
+    margin-bottom: 0;
+}
+
+#select ul{
+    background-color: white;
+    position: absolute;
+    list-style: none;
+    top: 120%;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem 0 0 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s linear 0.3s;
+    border: 1px solid rgb(0, 119, 255);
+    border-radius: 5px;
+}
+
+#select ul li:hover{
+    color: orange;
+}
+
+#select ul li{
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+#select ul.open{
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+/*  */
+
+.products{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.product{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid rgb(101, 173, 255);
+    border-radius: 20px;
+    background-color: white;
+    margin-top: 2rem;
+    margin-right: 10rem;
+}
+
+.product-img{
+    width: 210px;
+    margin-right: 3rem;
+}
+
+.product-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.5rem 0 0.5rem 0.5rem ;
+}
+
+.p-p{
+    display: flex;
+    text-align: center;
+    margin-bottom: -0.5rem;
+}
+
+.product-info a{
+    text-decoration: none;
+    color: rgb(0, 119, 255);
+}
+
+.product-info a:hover{
+    color: gold;
+}
+
+.product-param{
+    margin-top: 1rem;
+}
+
+.p-p i{
+    margin-right: 0.5rem;
+    color: rgb(0, 119, 255);
+}
+
+.p-p p{
+    color: rgb(34, 0, 255);
+}
+
+.product-purchase{
+    margin-right: 1rem;
+}
+
+.new-price{
+    color: gold;
+    font-size: 1.5rem;
+}
+
+.old-price{
+    color: rgb(0, 119, 255);
+    text-decoration: line-through;
+    
+}
+
+.view-more{
+    border: solid;
+    text-decoration: none;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border-color: rgb(0, 119, 255);
+    color: rgb(0, 119, 255);
+}
+
+.view-more:hover{
+    color: rgb(0, 119, 255);
+    border-color: rgb(0, 119, 255);
+    background-color: rgb(130, 234, 255);
+}
+
