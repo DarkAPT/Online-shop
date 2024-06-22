@@ -12,7 +12,6 @@
 }
 
 .right-nav-list,
-.footer-list,
 .search-bar{
     display: flex;
 }
@@ -31,7 +30,7 @@
 .right-nav-list a:hover,
 #catalog-button:hover,
 .footer-list a:hover{
-    color: rgba(0,213,255,1);
+    color: rgb(0, 4, 255);
 }
 
 #catalog-button{
@@ -65,17 +64,13 @@
     margin-right: 0.25em;
 }
 
-.footer-bar{
-    justify-content: flex-end;
-    font-size: 0.75em;
-}
-
 .left-nav-bar-catalog{
     display: none;
     padding-top: 5px;
     left: 1rem;
     background-color: white;
     border: 1px solid rgba(0,213,255,1);
+    border-color: rgb(0, 4, 255);
     border-radius: 10px;
 }
 
@@ -98,11 +93,11 @@
     cursor: pointer;
     border: solid;
     border-radius: 1rem;
-    color: rgba(0,213,255,1);
+    color: rgb(0, 4, 255);
 }
 
 .left-nav-bar-catalog a:hover > svg{
-    color: rgba(0,213,255,1);
+    color: rgb(0, 4, 255);
 }
 
 .left-nav-bar-catalog ul svg{
@@ -135,7 +130,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
 }
 
 .title{
@@ -158,7 +152,7 @@
     vertical-align: middle;
     width: 100%;
     height: 2px;
-    background-color: rgb(0, 119, 255);
+    background-color: white;
     position: relative;
 }
 
@@ -170,4 +164,51 @@
 .title::before{
     margin-left: -100%;
     left: -0.6rem;    
+}
+
+/* Footer */
+
+
+.footer-bar{
+    flex-direction: column;
+    padding-top: 3rem;
+}
+
+.footer-list ul{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 0;
+}
+
+.footer-menu{
+    padding-right: 3rem;
+}
+
+.footer-menu span{
+    font-size: 1.5rem;
+    color: gold;
+}
+
+.footer-menu a{
+    padding-left: 0;
+    font-size: 1rem;
+}
+
+.footer-menu-stay-with-us{
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-menu-stay-with-us a{
+    margin-top: 2rem;
+    margin-right: 2rem;
+    padding: 0;
+}
+
+.company-name{
+    font-size: 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }

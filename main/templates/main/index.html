@@ -1,5 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load product_tags %}
+
 
     {% block css %}
     <!-- Swiper css -->
@@ -19,114 +21,23 @@
         <div class="slide-container swiper-container">
             <div class="slide-content">
                 <div class="card-wrapper swiper-wrapper">
+                    {% tag_products as products %}
+                    {% for product in products %}
+                    {% if product.discount != 0%}
                     <div class="card swiper-slide">
                         <div class="img-content">
                             <div class="card-image">
-                                <img src="{% static "main/images/3060ti.webp" %}" alt="" class="card-img">
+                                <img src="{{ product.image.url }}" alt="" class="card-img">
                             </div>
                         </div>
                         <div class="card-content">
-                            <p>Gigabyte GEFORCE RTX 3060ti Eagle OC 8gb</p>
-                            <span class="new-price">30 000₽</span> <span class="old-price">35 000₽</span> <p></p>
+                            <p>{{ product.name }}</p>
+                            <span class="new-price">{{product.sell_price}}₽</span> <span class="old-price">{{product.price}}₽</span> <p></p>
                             <a href="#" class="view-more">Подробнее</a>
                         </div>
                     </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/iphone 13.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Смартфон Apple iPhone 13 128 ГБ</p>
-                            <span class="new-price">60 000₽</span> <span class="old-price">65 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/4090 asus.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Asus ROG Strix GeForce RTX 4090</p>
-                            <span class="new-price">300 000₽</span> <span class="old-price">320 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/macbook-air-m1.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>13.3" Ноутбук Apple MacBook Air 13 M1</p>
-                            <span class="new-price">85 000₽</span> <span class="old-price">99 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/intel-core i7 11700F.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Процессор Intel Core i7-11700F OEM</p>
-                            <span class="new-price">20 000₽</span> <span class="old-price">23 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/iphone 13.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Gigabyte GEFORCE RTX 3060ti Eagle OC 8gb</p>
-                            <span class="new-price">30 000₽</span> <span class="old-price">35 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/iphone 13.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Gigabyte GEFORCE RTX 3060ti Eagle OC 8gb</p>
-                            <span class="new-price">30 000₽</span> <span class="old-price">35 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/iphone 13.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Gigabyte GEFORCE RTX 3060ti Eagle OC 8gb</p>
-                            <span class="new-price">30 000₽</span> <span class="old-price">35 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
-                    <div class="card swiper-slide">
-                        <div class="img-content">
-                            <div class="card-image">
-                                <img src="{% static "main/images/iphone 13.webp" %}" alt="" class="card-img">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>Gigabyte GEFORCE RTX 3060ti Eagle OC 8gb</p>
-                            <span class="new-price">30 000₽</span> <span class="old-price">35 000₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
-                        </div>
-                    </div>
+                    {%endif%}
+                    {%endfor%}
                 </div>
             </div>
     

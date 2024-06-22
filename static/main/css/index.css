@@ -5,11 +5,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* background: rgb(255,255,255);
-    background: linear-gradient(124deg, rgba(255,255,255,1) 0%, rgba(0,213,255,1) 100%); */
-    background: rgb(0,213,255);
-    background: radial-gradient(circle, rgba(0,213,255,1) 0%, rgba(255,255,255,1) 100%);
-
+    background-color: rgb(86, 145, 255);
 }
 
 /* Slider START */
@@ -81,9 +77,8 @@
 }
 
 .view-more:hover{
-    color: rgb(0, 119, 255);
-    border-color: rgb(0, 119, 255);
-    background-color: rgb(130, 234, 255);
+    color: gold;
+    border-color: gold;
 }
 
 .swiper-pagination{

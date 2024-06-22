@@ -1,7 +1,10 @@
 .content,
 .product-title{
     display: flex;
-    background: rgb(255,255,255);
+}
+
+.product-title{
+    background-color: rgb(86, 145, 255);
 }
 
 /* left nav-bar START */
@@ -299,10 +302,6 @@ input[type="range"]::-webkit-slider-thumb{
     color: gold;
 }
 
-.product-param{
-    margin-top: 1rem;
-}
-
 .p-p i{
     margin-right: 0.5rem;
     color: rgb(0, 119, 255);
@@ -323,8 +322,11 @@ input[type="range"]::-webkit-slider-thumb{
 
 .old-price{
     color: rgb(0, 119, 255);
-    text-decoration: line-through;
-    
+    text-decoration: line-through;  
+}
+
+.product-name{
+    margin-bottom: 1rem;
 }
 
 .view-more{
@@ -337,8 +339,7 @@ input[type="range"]::-webkit-slider-thumb{
 }
 
 .view-more:hover{
-    color: rgb(0, 119, 255);
-    border-color: rgb(0, 119, 255);
-    background-color: rgb(130, 234, 255);
+    color: gold;
+    border-color: gold;
 }
 

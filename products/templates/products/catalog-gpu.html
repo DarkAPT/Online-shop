@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load product_tags %}
 
 {% block title %} Видеокарты {% endblock title %}
 
@@ -273,10 +274,11 @@
                 </div>
             </div>
             <div class="products">
+                {% tag_products as products %}
                 {% for product in products %}
                     <div class="product">
                         <div class="product-img">
-                            <img src="{% static product.image %}" alt="" >
+                            <img src="{{ product.image.url }}" alt="" >
                         </div>
                         <div class="product-info">
                             <a href="#">
@@ -284,28 +286,26 @@
                                     <span>{{ product.name }}</span>
                                 </div>
                             </a>
+                            {% tag_characteristics_sets as CharacteristicsSet %}
+                            {% for property in CharacteristicsSet%}
+                            {% if property.productid.id == product.id and property.propertyid.name != "Кол-во вентиляторов"%}
                             <div class="product-param">
                                 <div class="p-p">
-                                    <i>Тип памяти:</i>
-                                    <p>{{ product.memory_type }}</p>
-                                </div>
-                                <div class="p-p">
-                                    <i>Объем памяти:</i>
-                                    <p>{{ product.memory_size }}</p>
-                                </div>
-                                <div class="p-p">
-                                    <i>Ширина шины памяти:</i>
-                                    <p>{{ product.memory_bus_size }}</p>
-                                </div>
-                                <div class="p-p">
-                                    <i>Тип шины:</i>
-                                    <p>{{ product.memory_bus_type }}</p>
+                                    <i>{{ property.propertyid.name }}:</i>
+                                    <p>{{ property.propertyvalueid.value }}</p>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="product-purchase">
-                            <span class="new-price">{{ product.new_price }}₽</span> <span class="old-price">{{ product.old_price }}₽</span> <p></p>
+                            {% if product.discount != 0%}
+                            <span class="new-price">{{ product.sell_price }}₽</span> <span class="old-price">{{ product.price }}₽</span> <p></p>
                             <a href="#" class="view-more">В корзину</a>
+                            {% else %}
+                            <span class="new-price">{{ product.price }}₽</span> <p></p>
+                            <a href="#" class="view-more">В корзину</a>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
