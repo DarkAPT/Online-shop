@@ -12,3 +12,10 @@ for(option of options){
         selectText.innerHTML = this.innerHTML;
     }
 }
+
+document.addEventListener("click", function(event) {
+    const isClickInside = select.contains(event.target) || list.contains(event.target);
+    if (!isClickInside) {
+        list.classList.remove("open");
+    }
+});

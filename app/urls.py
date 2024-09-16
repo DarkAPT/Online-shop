@@ -19,12 +19,15 @@ from django.urls import path,include
 from django.conf.urls.static import static
 
 from app import settings
+from products import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),
-    path('', include('products.urls', namespace='catalog'))
+    path('catalog/', include('products.urls', namespace='catalog')),
+    path('filter-products/', views.filter_product, name='filter-product'),
+    path('products_ordering/', views.products_ordering, name='products_ordering'),
 ]
 
 

@@ -1,0 +1,156 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load product_tags %}
+
+{% block title %} {{title}} {% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "products/css/product.css" %}">
+{% endblock css %}
+
+{% block content %}
+    <content>
+    <div class="product-title">
+        <div class="title">
+            <h2>{{title}}</h2>
+        </div>
+    </div>
+    <div class="content">
+        <div class="left-bar">
+            <form action="" method="get" name='filter'>
+                <div class="filters">
+                    <div class="filter">
+                        <div class="ft">
+                            <span class="filter-title">Цена</span>
+                        </div>
+                        <div class="price-slider">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="range-input">
+                            <input type="range" class="range-min" min="0" max="500000" value="0" oninput="slideMin()">
+                            <input type="range" class="range-max" min="0" max="500000" value="500000" oninput="slideMax()">
+                        </div>
+                        <div class="price-input">
+                            <div class="field" id="field-min">
+                                <span>От</span>
+                                <input type="number" class="input-min" value="0" onchange="setMinInput()">
+                            </div>
+                            <div class="field">
+                                <span>До</span>
+                                <input type="number" class="input-max" value="500000" onchange="setMaxInput()">
+                            </div>    
+                        </div>
+                        <div class="filter_price_button">
+                            <button class='price_button' type='button'>Фильтр по цене</button>
+                        </div>
+                    </div>
+                {% for property_name in properties %}
+                    <div class="filter">
+                        <div class="ft">
+                            <span class="filter-title">{{property_name.name}}</span>
+                        </div>
+                        {% tag_property_values as property_values %}
+                        {% for property_value in property_values %}
+                        {% if property_value.propertyid.name == property_name.name %}
+                        <div>
+                            <div>
+                                <label>
+                                    <input class="check-box filter-checkbox" data-filter="filter" type="checkbox" name="filter" value="{{property_value.id}}">
+                                    <div class="custom-checkbox"></div>
+                                    <div class="condition">
+                                        <span>{{property_value.value}}</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </form>
+            </div>
+            
+        </div>
+        <div class="main-content">
+            <div class="searchResultsSort">
+                <div class="orderBy">
+                    <span>Сортировать по</span>
+                </div>
+                <div class="searchSort-bar">
+                    <div id="select">
+                        <p id="selectText">Новинки</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                          </svg>
+                          <ul id="list">
+                            <li class="options"><button class="btn-action" data-action='new'>Новинки</button></li>
+                            <li class="options"><button class="btn-action" data-action='cheap'>Сначала дешевые</button></li>
+                            <li class="options"><button class="btn-action" data-action='expensive'>Сначала дорогие</button></li>
+                          </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="product_page" id="product_page">
+                {% for product in products %}
+                <div class="products" id='filtered-product'>
+                        <div class="product">
+                            <div class="product-img">
+                                <img src="{{ product.image.url }}" alt="" >
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url "catalog:product" product.slug %}">
+                                    <div class="product-name">
+                                        <span>{{ product.name }}</span>
+                                    </div>
+                                </a>
+                                {% tag_characteristics_sets as CharacteristicsSet %}
+                                {% for property in CharacteristicsSet%}
+                                {% if property.productid.id == product.id and property.propertyid.name != "Кол-во вентиляторов"%}
+                                <div class="product-param">
+                                    <div class="p-p">
+                                        <i>{{ property.propertyid.name }}:</i>
+                                        <p>{{ property.propertyvalueid.value }}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="product-purchase">
+                                {% if product.discount != 0%}
+                                <span class="new-price">{{ product.sell_price }}₽</span> <span class="old-price">{{ product.price_without_disc }}₽</span>
+                                <a href="#" class="view-more">В корзину</a>
+                                {% else %}
+                                <span class="new-price">{{ product.price_without_disc }}₽</span>
+                                <a href="#" class="view-more">В корзину</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                        {% endfor %}
+                <div class="pagination">
+                    {% if products.page.has_other_pages %}
+                        <button class='first_page'>В начало</button>
+                        <ul>
+                        {% for page in products.paginator.page_range %}
+                            {% if page >= products.number|add:"-2" and page <= products.number|add:"2"%}
+                                <button type="button" class="page_button" data-page = {{page}} >
+                                    <li class="link{% if  products.number == page %} active {% endif %}" > {{ page }} </li>
+                                </button>
+                            {% endif %}                 
+                        {% endfor %}
+                        </ul>
+                        <button class='next_page'>Следующая</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </content>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static "products/js/scroll-script.js" %}"></script>
+    <script src="{% static "products/js/search-bar-script.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{% static "products/js/product_filters.js" %}"></script>
+{% endblock js %}

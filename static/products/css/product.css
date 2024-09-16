@@ -3,10 +3,6 @@
     display: flex;
 }
 
-.product-title{
-    background-color: rgb(86, 145, 255);
-}
-
 /* left nav-bar START */
 
 .left-bar{
@@ -130,6 +126,19 @@ input[type="range"]::-webkit-slider-thumb{
     background-color: gold;
 }
 
+.filter_price_button{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-right: 1rem;
+}
+
+.filter_price_button button{
+    padding: 10px;
+    border: 1px solid blue;
+    border-radius: 10px;
+    background-color: gold;
+}
 /* CheckBox styles */
 
 .check-box {
@@ -239,10 +248,20 @@ input[type="range"]::-webkit-slider-thumb{
     transition: opacity 0.5s, visibility 0s linear 0.3s;
     border: 1px solid rgb(0, 119, 255);
     border-radius: 5px;
+    z-index: 1;
 }
 
-#select ul li:hover{
-    color: orange;
+#select ul li button:hover{
+    color: gold;
+}
+
+#select ul li button,
+#selectText button{
+    text-align: left;
+    width: 100%;
+    border: none;
+    background-color: white;
+    color: rgb(0, 119, 255);
 }
 
 #select ul li{
@@ -258,26 +277,36 @@ input[type="range"]::-webkit-slider-thumb{
 
 /*  */
 
+.product_page{
+    display: grid;
+    position: relative;
+    justify-items: center;
+    grid-template-rows: repeat(3, 1fr) 10rem;
+}
+
 .products{
-    display: flex;
-    flex-direction: column;
+    grid-gap: 1px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-items: center;
     text-align: center;
 }
 
 .product{
+    width: 1000px;
+    height: 200px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     border: 2px solid rgb(101, 173, 255);
     border-radius: 20px;
     background-color: white;
     margin-top: 2rem;
-    margin-right: 10rem;
+    grid-column-start: span 12;
 }
 
 .product-img{
     width: 210px;
-    margin-right: 3rem;
 }
 
 .product-img img{
@@ -291,6 +320,11 @@ input[type="range"]::-webkit-slider-thumb{
     display: flex;
     text-align: center;
     margin-bottom: -0.5rem;
+}
+
+.product-info{
+    width: 50%;
+    text-align: left;
 }
 
 .product-info a{
@@ -312,7 +346,8 @@ input[type="range"]::-webkit-slider-thumb{
 }
 
 .product-purchase{
-    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .new-price{
@@ -322,7 +357,7 @@ input[type="range"]::-webkit-slider-thumb{
 
 .old-price{
     color: rgb(0, 119, 255);
-    text-decoration: line-through;  
+    text-decoration: line-through;
 }
 
 .product-name{
@@ -336,6 +371,7 @@ input[type="range"]::-webkit-slider-thumb{
     padding: 0.5rem;
     border-color: rgb(0, 119, 255);
     color: rgb(0, 119, 255);
+    margin-top: 0.5rem;
 }
 
 .view-more:hover{
@@ -343,3 +379,72 @@ input[type="range"]::-webkit-slider-thumb{
     border-color: gold;
 }
 
+.footer-bar, .nav-bar{
+    background-color: rgb(73 156 252);
+}
+
+.right-nav-list a, #catalog-button, .footer-list a, .footer-bar p{
+    color: white;
+    background-color: rgb(73 156 252);
+}
+
+.search-bar input, .search-bar svg, .search-bar>input::placeholder{
+    color: white;
+    background-color: rgb(73 156 252);
+}
+
+.title::after,
+.title::before{
+    background-color: rgb(73 156 252);
+}
+
+/* Pagination */
+
+.pagination{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.pagination ul{
+    display: flex;
+    margin: 0;
+    padding-inline: 1rem;
+}
+
+.pagination ul li{
+    display: inline-block;
+    border: 1px solid rgb(73 156 252);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 2.5rem;
+    cursor: pointer;
+}
+
+.pagination ul button{
+    text-decoration: none;
+    margin: 0 0.5rem;
+    border: none;
+    background: none
+}
+
+.first_page,
+.next_page{
+    display: inline-flex;
+    font-size: 20px;
+    align-items: center;
+    color: rgb(73 156 252);
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+.active{
+    border:1px solid rgb(2, 83, 176);
+    background-color: rgb(73 156 252);
+}

@@ -1,6 +1,6 @@
 from django import template
 
-from products.models import Products,CharacteristicsSet
+from products.models import Products,CharacteristicsSet,Categories,PropertyValues
 
 register = template.Library()
 
@@ -11,3 +11,11 @@ def tag_products():
 @register.simple_tag()
 def tag_characteristics_sets():
     return CharacteristicsSet.objects.all()
+
+@register.simple_tag()
+def tag_categories():
+    return Categories.objects.all()
+
+@register.simple_tag()
+def tag_property_values():
+    return PropertyValues.objects.all()

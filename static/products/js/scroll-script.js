@@ -34,6 +34,7 @@ function slideMax(){
 function setArea(){
     progress.style.left = (minVal.value / sliderMaxValue) * 100 + "%";
     progress.style.right = 100 - (maxVal.value / sliderMaxValue) * 100 + "%";
+
 }
 
 function setMinInput(){
@@ -51,5 +52,6 @@ function setMaxInput(){
         priceInputMax.value = sliderMaxValue;
     }
     maxVal.value = priceInputMax.value;
+    document.querySelector(".input-max").value = "1000"
     slideMax();
 }

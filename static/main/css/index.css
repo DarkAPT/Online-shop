@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgb(86, 145, 255);
+    background-color: rgb(73 156 252);
 }
 
 /* Slider START */
@@ -35,7 +35,6 @@
 }
 
 .card{
-    height: 25rem;
     background-color: white;
     padding: 1em;
     border-color: rgb(34, 0, 255);
@@ -54,6 +53,10 @@
 .card-content{
     color: rgb(0, 119, 255);
     text-align: center;
+}
+
+.product_name{
+    height: 72px;
 }
 
 .new-price{
@@ -102,3 +105,4 @@
 }
 
 /* Slider END */
+

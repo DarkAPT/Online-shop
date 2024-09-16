@@ -31,9 +31,9 @@
                             </div>
                         </div>
                         <div class="card-content">
-                            <p>{{ product.name }}</p>
-                            <span class="new-price">{{product.sell_price}}₽</span> <span class="old-price">{{product.price}}₽</span> <p></p>
-                            <a href="#" class="view-more">Подробнее</a>
+                            <p class="product_name">{{ product.name }}</p>
+                            <span class="new-price">{{product.sell_price}}₽</span> <span class="old-price">{{product.price_without_disc}}₽</span> <p></p>
+                            <a href="{% url "catalog:product" product.slug %}" class="view-more">Подробнее</a>
                         </div>
                     </div>
                     {%endif%}
