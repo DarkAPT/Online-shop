@@ -18,6 +18,9 @@
     <div class="content">
         <div class="left-bar">
             <form action="" method="get" name='filter'>
+                {% if request.GET.q %}
+                    <input type="hidden" name="q" value="{{ request.GET.q }}">
+                {% endif %}
                 <div class="filters">
                     <div class="filter">
                         <div class="ft">

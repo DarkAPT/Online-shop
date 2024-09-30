@@ -1,11 +1,21 @@
 $(document).ready(function(){
     var currentUrl = window.location.href.split('/');
-    let category_slug = currentUrl.pop() || currentUrl.pop();
-
+    console.log(currentUrl);
+    let query = window.location.href.split('?');
+    if (query.length >= 2) {
+        category_slug = currentUrl.pop() && currentUrl.pop();
+    } else {
+        category_slug = currentUrl.pop() || currentUrl.pop();
+    }    
+    if (query.length > 1 && query[1].split("=")[0]=="q") {
+        query = query[1].split("=")[1]
+    }
+    console.log(category_slug);
 
     let filter_object = {
         'category_slug': category_slug,  // Добавляем category_slug в объект фильтра
-        'page': 1
+        'page': 1,
+        'q': query
     };
     $('.page_button').click(function() {
         let current_page = $(this).data("page");
@@ -23,7 +33,6 @@ $(document).ready(function(){
         filter_object.min_price = min_price;
         filter_object.max_price = max_price;
         filter_object.page = 1
-
     })
     $('.next_page').click(function() {
         filter_object.page = filter_object.page+1
@@ -32,7 +41,6 @@ $(document).ready(function(){
         filter_object.page = 1
     })
     $(".filter-checkbox, .btn-action, .price_button, .page_button, .first_page, .next_page").on("click", function(){
-
         $(".filter-checkbox").each(function(){
             let filter_key = $(this).data("filter")
 
