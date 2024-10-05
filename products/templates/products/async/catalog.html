@@ -10,7 +10,7 @@
             <div class="product-info">
                 <a href="{% url "catalog:product" product.slug %}">
                     <div class="product-name">
-                        <span>{{ product.name }}</span>
+                        <span>{{ product.name|truncatechars:50 }}</span>
                     </div>
                 </a>
                 {% tag_characteristics_sets as CharacteristicsSet %}
@@ -38,7 +38,7 @@
 </div>
 {% endfor %}
 <div class="pagination">
-    {% if products.page.has_other_pages %}
+    {% if products.paginator.num_pages > 1 %}
         <button class='first_page'>В начало</button>
         <ul>
             {% for page in products.paginator.page_range %}

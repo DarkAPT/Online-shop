@@ -1,16 +1,14 @@
 $(document).ready(function(){
     var currentUrl = window.location.href.split('/');
-    console.log(currentUrl);
     let query = window.location.href.split('?');
     if (query.length >= 2) {
         category_slug = currentUrl.pop() && currentUrl.pop();
     } else {
         category_slug = currentUrl.pop() || currentUrl.pop();
     }    
-    if (query.length > 1 && query[1].split("=")[0]=="q") {
-        query = query[1].split("=")[1]
+    if (query.length > 1 && query[1].split("=")[0] === "q") {
+        query = decodeURIComponent(query[1].split("=")[1]); // Декодируем строку
     }
-    console.log(category_slug);
 
     let filter_object = {
         'category_slug': category_slug,  // Добавляем category_slug в объект фильтра
@@ -20,7 +18,6 @@ $(document).ready(function(){
     $('.page_button').click(function() {
         let current_page = $(this).data("page");
         filter_object.page = current_page;
-        console.log(current_page);
     })
     $('.btn-action').click(function() {
         let action = $(this).data('action');

@@ -206,7 +206,6 @@ input[type="range"]::-webkit-slider-thumb{
 
 .searchResultsSort{
     display: flex;
-    width: 100%;
     height: 2rem;
 }
 
@@ -293,8 +292,8 @@ input[type="range"]::-webkit-slider-thumb{
 }
 
 .product{
-    width: 1000px;
-    height: 200px;
+    width: 60rem;
+    height: 13rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -447,4 +446,13 @@ input[type="range"]::-webkit-slider-thumb{
 .active{
     border:1px solid rgb(2, 83, 176);
     background-color: rgb(73 156 252);
+}
+
+.not_found{
+    height: 13rem;
+    margin-top: 2rem;
+}
+
+.not_found h5{
+    color: rgb(0, 119, 255);
 }

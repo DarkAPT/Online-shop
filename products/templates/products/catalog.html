@@ -75,6 +75,11 @@
             
         </div>
         <div class="main-content">
+            <div class="search_q">
+                {% if request.GET.q %}
+                    <h4>Результаты по запросу {{request.GET.q}}</h4>
+                {% endif %}
+            </div>
             <div class="searchResultsSort">
                 <div class="orderBy">
                     <span>Сортировать по</span>
@@ -93,6 +98,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="product_page" id="product_page">
                 {% for product in products %}
                 <div class="products" id='filtered-product'>
@@ -103,7 +109,7 @@
                             <div class="product-info">
                                 <a href="{% url "catalog:product" product.slug %}">
                                     <div class="product-name">
-                                        <span>{{ product.name }}</span>
+                                        <span>{{ product.name|truncatechars:50 }}</span>
                                     </div>
                                 </a>
                                 {% tag_characteristics_sets as CharacteristicsSet %}
@@ -131,11 +137,11 @@
                     </div>
                         {% endfor %}
                 <div class="pagination">
-                    {% if products.page.has_other_pages %}
+                    {% if products.paginator.num_pages > 1 %}
                         <button class='first_page'>В начало</button>
                         <ul>
                         {% for page in products.paginator.page_range %}
-                            {% if page >= products.number|add:"-2" and page <= products.number|add:"2"%}
+                            {% if page >= products.number|add:-2 and page <= products.number|add:2%}
                                 <button type="button" class="page_button" data-page = {{page}} >
                                     <li class="link{% if  products.number == page %} active {% endif %}" > {{ page }} </li>
                                 </button>

@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.db.models import F, ExpressionWrapper, FloatField
 from products.utils import q_search
-from products.models import Products,Properties,PropertyValues
+from products.models import Products,Properties,PropertyValues,Categories
 from products.utils import model,vectorizer
 
 
@@ -20,19 +20,21 @@ def product(request, product_slug):
     return render(request, 'products/product.html' ,context)
 
 
-def catalog(request, category_slug=None, page=1):
-    products = Products.objects.filter(categoryid__slug=category_slug)
+def catalog(request, category_slug, page=1):
+
     properties = Properties.objects.filter(categoryid__slug=category_slug)
+    title = Categories.objects.filter(slug = category_slug)[0].name
+
     query = request.GET.get('q', None)
+
 
     if query:
         products = q_search(query)
-    if products:
-        title = products[0].categoryid.name
+        products = products.filter(categoryid__slug=category_slug)
     else:
-        title = "Каталог"
+        products = Products.objects.filter(categoryid__slug=category_slug)
 
-    paginator = Paginator(products,4)
+    paginator = Paginator(products,1)
     current_page = paginator.page(page)
 
     context = {
@@ -56,6 +58,7 @@ def filter_product(request):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     query = request.GET.get('q', None)
+    page = request.GET.get('page')
 
     if query:
         products = q_search(query)
@@ -63,31 +66,32 @@ def filter_product(request):
         products = Products.objects.filter(categoryid__slug=category_slug)
     # Если есть параметр фильтра, применяем фильтрацию к товарам
     if filter_param:
-        prop_list = []
-        if not query:
-            combined_queryset = Products.objects.none()
-        else:
-            combined_queryset = q_search(query)
+        combined_queryset = products
+        q_set = []
+
+        current_filter = None
         for filter_item in filter_param:
-            filter_property_id = PropertyValues.objects.get(id=int(filter_item)).propertyid
-            if filter_property_id in prop_list:
-                combined_queryset = combined_queryset | Products.objects.filter(characteristicsset__propertyvalueid=int(filter_item))
-            elif not combined_queryset.exists():
-                combined_queryset = combined_queryset | Products.objects.filter(characteristicsset__propertyvalueid=int(filter_item))
-                prop_list.append(filter_property_id)
+            if current_filter != PropertyValues.objects.get(id=int(filter_item)).propertyid:
+                q_set.append([filter_item])
+                current_filter = PropertyValues.objects.get(id=int(filter_item)).propertyid
             else:
-                prop_list.append(filter_property_id)
-                combined_queryset = combined_queryset & Products.objects.filter(characteristicsset__propertyvalueid=int(filter_item))
+                q_set[-1].append(filter_item)
+
+        temp_queryset = Products.objects.none()
+        for filter_list in q_set:
+            for filter_q in filter_list:
+                temp_queryset |= Products.objects.filter(characteristicsset__propertyvalueid=int(filter_q))
+            combined_queryset &= temp_queryset
+            temp_queryset = Products.objects.none()
+
         products = combined_queryset.distinct()
 
-    if order_by:
-        if order_by == "new":
-            products = products.order_by("id")
-        elif order_by == "cheap":
-            products = products.order_by("price")
-        elif order_by == "expensive":
-            products = products.order_by("-price")
-
+    if order_by == "new":
+        products = products.order_by("id")
+    elif order_by == "cheap":
+        products = products.order_by("price")
+    elif order_by == "expensive":
+        products = products.order_by("-price")
 
     if min_price or max_price:
         products = products.annotate(
@@ -97,8 +101,8 @@ def filter_product(request):
     )).filter(price_with_disc__gte=min_price).filter(price_with_disc__lte=max_price)
 
     if products:
-        paginator = Paginator(products,4)
-        current_page = paginator.page(1)
+        paginator = Paginator(products,1)
+        current_page = paginator.page(page)
 
         data = render_to_string('products/async/catalog.html', {'products':current_page})
     else:
@@ -113,7 +117,8 @@ def products_ordering(request):
 
 def category_prediction(request):
     new_description = request.GET.get('q', '').strip()
+    q = request.GET.get('q', '')
     new_vector = vectorizer.transform([new_description])
     predicted_category = model.predict(new_vector)
     url = reverse('catalog:catalog', args=[predicted_category[0]])
-    return redirect(url)
+    return redirect(f"{url}?q={q}")
