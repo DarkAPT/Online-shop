@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load product_tags %}
 
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="card-content">
-                            <p class="product_name">{{ product.name }}</p>
+                            <p class="product_name">{{ product.name|truncatechars:50 }}</p>
                             <span class="new-price">{{product.sell_price}}₽</span> <span class="old-price">{{product.price_without_disc}}₽</span> <p></p>
                             <a href="{% url "catalog:product" product.slug %}" class="view-more">Подробнее</a>
                         </div>

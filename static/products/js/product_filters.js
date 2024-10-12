@@ -40,7 +40,6 @@ $(document).ready(function(){
     $(".filter-checkbox, .btn-action, .price_button, .page_button, .first_page, .next_page").on("click", function(){
         $(".filter-checkbox").each(function(){
             let filter_key = $(this).data("filter")
-
             filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function(element) {
                 return element.value
             })

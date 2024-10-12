@@ -18,4 +18,4 @@ def tag_categories():
 
 @register.simple_tag()
 def tag_property_values():
-    return PropertyValues.objects.all()
+    return PropertyValues.objects.all().order_by('order_value')

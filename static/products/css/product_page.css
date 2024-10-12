@@ -179,3 +179,7 @@
     color: white;
     background-color: rgb(73 156 252);
 }
+
+.search_button{
+    border:1px solid #fff;
+}

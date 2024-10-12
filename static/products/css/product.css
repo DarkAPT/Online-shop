@@ -280,7 +280,7 @@ input[type="range"]::-webkit-slider-thumb{
     display: grid;
     position: relative;
     justify-items: center;
-    grid-template-rows: repeat(3, 1fr) 10rem;
+    grid-template-rows: repeat(4, 1fr) 10rem;
 }
 
 .products{
@@ -455,4 +455,8 @@ input[type="range"]::-webkit-slider-thumb{
 
 .not_found h5{
     color: rgb(0, 119, 255);
+}
+
+.search_button{
+    border:1px solid #fff;
 }

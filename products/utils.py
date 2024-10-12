@@ -15,11 +15,11 @@ def get_product_names():
     return Products.objects.values_list('name', flat=True)
 
 def q_search(query):
-    query = query.strip().replace(" ", "")
+    query_strip = query.strip().replace(" ", "")
     choices = get_product_names()  # Получаем список названий продуктов
-    corrected_query = correct_typos(query, choices)  # Исправляем опечатки
+    corrected_query = correct_typos(query_strip, choices)  # Исправляем опечатки
 
-    exact_matches = Products.objects.filter(name__icontains=query)
+    exact_matches = Products.objects.filter(name__icontains=query_strip)
 
     vector = SearchVector("name", 'description')
     search_query = SearchQuery(corrected_query)  # Используем исправленный запрос

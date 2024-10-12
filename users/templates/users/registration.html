@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static "users/css/registration_login.css" %}">
+</head>
+<body>
+    <div class="main">
+        <div class="title"><h1>Регистрация</h1></div>
+        <div class="user_info">
+            <input type="text" name="username_input" id="" placeholder="Имя пользователя">
+            <input type="email" name="email_input" id="" placeholder="Почта">
+            <input type="password" name="password_input" id="" placeholder="Пароль">
+            <input type="password" name="password_check" id="" placeholder="Подтвердите пароль">
+            <input type="tel" name="phone_number_input" id="" placeholder="Номер телефона">
+        </div>
+        <div class="registration">
+            <button>Зарегистрироваться</button>
+            <div class="login">
+                <a href="{% url "users:login" %}">Уже есть аккаунт</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

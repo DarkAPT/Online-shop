@@ -12,8 +12,10 @@ from products.utils import model,vectorizer
 # Create your views here.
 def product(request, product_slug):
     product_obj = Products.objects.get(slug=product_slug)
+    title = product_obj.name
 
     context = {
+        "title": title,
         "product": product_obj
     }
 
@@ -34,7 +36,7 @@ def catalog(request, category_slug, page=1):
     else:
         products = Products.objects.filter(categoryid__slug=category_slug)
 
-    paginator = Paginator(products,1)
+    paginator = Paginator(products,4)
     current_page = paginator.page(page)
 
     context = {
@@ -101,7 +103,7 @@ def filter_product(request):
     )).filter(price_with_disc__gte=min_price).filter(price_with_disc__lte=max_price)
 
     if products:
-        paginator = Paginator(products,1)
+        paginator = Paginator(products,4)
         current_page = paginator.page(page)
 
         data = render_to_string('products/async/catalog.html', {'products':current_page})

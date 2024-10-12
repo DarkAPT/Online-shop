@@ -67,6 +67,7 @@ class Properties(models.Model):
 class PropertyValues(models.Model):
     propertyid = models.ForeignKey(to=Properties, on_delete=models.CASCADE)
     value = models.CharField(max_length=150)
+    order_value = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'PropertyValues'
