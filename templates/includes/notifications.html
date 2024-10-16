@@ -1,0 +1,17 @@
+{% load static %}
+
+<!-- Для non_field_erors  -->
+{% if form.non_field_errors %}
+<div class="b-popup" id='b-popup'>
+    <div class="error" id='error'>
+        <span>Неправильные введенные данные</span>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener('click', function() {
+        var block = document.getElementById('b-popup');
+        block.style.display = 'none';
+    });
+</script>

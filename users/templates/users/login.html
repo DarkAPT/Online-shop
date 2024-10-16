@@ -13,14 +13,18 @@
 
 </head>
 <body>
+    {% include "includes/notifications.html" %}
     <div class="main" id="login_main">
         <div class="title"><h1>Авторизация</h1></div>
-        <div class="user_info">
-            <input type="text" name="email_input" id="" placeholder="Почта или номер телефона">
-            <input type="password" name="password_input" id="" placeholder="Пароль">
-        </div>
+        <form action="{% url "user:login" %}" method="post">
+            {% csrf_token %}
+            <div class="user_info">
+                <input type="text" name="username" placeholder="Почта или номер телефона" id='id_username' autocomplete='no' required>
+                <input type="password" name="password" placeholder="Пароль" id='id_passwoed' required>
+                <button>Войти</button>
+            </div>
+        </form>
         <div class="registration">
-            <button>Войти</button>
             <div class="login">
                 <a href="{% url "users:registration" %}">Ещё нет аккаунта</a>
             </div>

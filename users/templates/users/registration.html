@@ -15,15 +15,17 @@
 <body>
     <div class="main">
         <div class="title"><h1>Регистрация</h1></div>
-        <div class="user_info">
-            <input type="text" name="username_input" id="" placeholder="Имя пользователя">
-            <input type="email" name="email_input" id="" placeholder="Почта">
-            <input type="password" name="password_input" id="" placeholder="Пароль">
-            <input type="password" name="password_check" id="" placeholder="Подтвердите пароль">
-            <input type="tel" name="phone_number_input" id="" placeholder="Номер телефона">
-        </div>
+        <form action="">
+            <div class="user_info">
+                <input type="text" name="username_input" id="" placeholder="Имя пользователя">
+                <input type="email" name="email_input" id="" placeholder="Почта">
+                <input type="tel" name="phone_number_input" id="" placeholder="Номер телефона">
+                <input type="password" name="password_input" id="" placeholder="Пароль">
+                <input type="password" name="password_check" id="" placeholder="Подтвердите пароль">
+                <button>Зарегистрироваться</button>
+            </div>
+        </form>
         <div class="registration">
-            <button>Зарегистрироваться</button>
             <div class="login">
                 <a href="{% url "users:login" %}">Уже есть аккаунт</a>
             </div>
