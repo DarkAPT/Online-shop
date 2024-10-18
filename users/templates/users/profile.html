@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static "users/css/profile.css" %}">
+{% endblock css %}
+
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+<content>
+    <div class="main">
+        <div class="left_block">
+                <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                    <form action="{% url "user:profile" %}", method='post' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12 mb-3 text-center">
+                                {% if user.image %}
+                                <div class="profile_picture">
+                                    <img src="{{user.image.url}}" alt="">
+                                </div>
+                                {% else %}
+                                <div class="profile_picture">
+                                    <img src="{% static "users/images/user_default_icon.jpg" %}" alt="">
+                                </div>
+                                {% endif %}
+                                <input type="file" class="form-control mt-3" id="id_image"
+                                    name='image'
+                                    accept="image/*">
+                                {% if form.image.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.image.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="id_first_name" class="form-label">Имя*</label>
+                                <input type="text" class="form-control" id="id_first_name"
+                                    name = "first_name"
+                                    placeholder="Введите ваше имя"
+                                    value="{{form.first_name.value}}" 
+                                    required>
+                                    {% if form.first_name.errors %}
+                                        <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                                    {% endif %}
+                                    
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="id_last_name" class="form-label">Фамилия*</label>
+                                <input type="text" class="form-control" id="id_last_name"
+                                    name='last_name'
+                                    placeholder="Введите вашу фамилию"
+                                    value="{{form.last_name.value}}" 
+                                    required>
+                                    {% if form.last_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                                    {% endif %}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="id_username" class="form-label">Имя пользователя*</label>
+                                <input type="text" class="form-control" id="id_username"
+                                    name='username'
+                                    placeholder="Введите ваше имя пользователя" 
+                                    value="{{form.username.value}}" 
+                                    required>
+                                    {% if form.username.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.username.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="id_email" class="form-label">Email*</label>
+                                <input type="email" class="form-control" id="id_email"
+                                    name='email'
+                                    placeholder="Введите ваш email" 
+                                    value="{{form.email.value}}"
+                                    required>
+                                    {% if form.email.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.email.errors}}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" class="btn btn-dark">Сохранить</button>
+                            <a href="{% url "user:logout" %}" class="btn btn-red logout_btn">Выйти</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
+        <div class="middle_block">
+            <h3>Заказы</h3>
+            <div class="orders">
+                <div class="order">
+                    <button class="order_num" id="order_num">
+                        <h5>Заказ №10000-100</h5>
+                    </button>
+                    <div class="products visible" id="products">
+                        <div class="product">
+                            <div class="prod_img">
+                                <img src="static/images/rtx3060 12gm 200x200.webp" alt="">
+                            </div>
+                            <div class="order_info">
+                                <h6>Видеокарта Gigabyte GeForce RTX 3060 EAGLE OC 12G</h6>
+                                <div class="order_p"><i>Дата заказа:</i> <span>12.12.24</span><br></div>
+                                <div class="order_p"><i>Дата доставки:</i> <span>01.01.25</span><br></div>
+                                <div class="order_p"><i>Цена:</i> <span>45 000Р</span><br></div>
+                                <div class="order_p"><i>Пункт выдачи:<span></span></i></div>
+                            </div>
+                        </div>
+                        <div class="product">
+                            <div class="prod_img">
+                                <img src="static/images/rtx3060 12gm 200x200.webp" alt="">
+                            </div>
+                            <div class="order_info">
+                                <h6>Видеокарта Gigabyte GeForce RTX 3060 EAGLE OC 12G</h6>
+                                <div class="order_p"><i>Дата заказа:</i> <span>12.12.24</span><br></div>
+                                <div class="order_p"><i>Дата доставки:</i> <span>01.01.25</span><br></div>
+                                <div class="order_p"><i>Цена:</i> <span>45 000Р</span><br></div>
+                                <div class="order_p"><i>Пункт выдачи:<span></span></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order">
+                    <button class="order_num" id="order_num">
+                        <h5>Заказ №10000-100</h5>
+                    </button>
+                    <div class="products visible" id="products">
+                        <div class="product">
+                            <div class="prod_img">
+                                <img src="static/images/rtx3060 12gm 200x200.webp" alt="">
+                            </div>
+                            <div class="order_info">
+                                <h6>Видеокарта Gigabyte GeForce RTX 3060 EAGLE OC 12G</h6>
+                                <div class="order_p"><i>Дата заказа:</i> <span>12.12.24</span><br></div>
+                                <div class="order_p"><i>Дата доставки:</i> <span>01.01.25</span><br></div>
+                                <div class="order_p"><i>Цена:</i> <span>45 000Р</span><br></div>
+                                <div class="order_p"><i>Пункт выдачи:<span></span></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right_block">
+            <div class="shop_cart">
+
+            </div>
+            <div class="favourites">
+
+            </div>
+        </div>
+    </div>
+</content>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static "users/js/user_page_orders.js" %}"></script>
+{% endblock js %}

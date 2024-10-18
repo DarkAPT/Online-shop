@@ -19,8 +19,9 @@
         <form action="{% url "user:login" %}" method="post">
             {% csrf_token %}
             <div class="user_info">
-                <input type="text" name="username" placeholder="Почта или номер телефона" id='id_username' autocomplete='no' required>
-                <input type="password" name="password" placeholder="Пароль" id='id_passwoed' required>
+                <input type="text" name="username" placeholder="Имя пользователя" id='id_username' autocomplete='no' required
+                value="{% if form.username.value %}{{form.username.value}}{% endif %}">
+                <input type="password" name="password" placeholder="Пароль" id='id_password' required>
                 <button>Войти</button>
             </div>
         </form>

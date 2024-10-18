@@ -15,13 +15,40 @@
 <body>
     <div class="main">
         <div class="title"><h1>Регистрация</h1></div>
-        <form action="">
+        <form action="{% url "users:registration" %}" method="post">
+            {% csrf_token %}
             <div class="user_info">
-                <input type="text" name="username_input" id="" placeholder="Имя пользователя">
-                <input type="email" name="email_input" id="" placeholder="Почта">
-                <input type="tel" name="phone_number_input" id="" placeholder="Номер телефона">
-                <input type="password" name="password_input" id="" placeholder="Пароль">
-                <input type="password" name="password_check" id="" placeholder="Подтвердите пароль">
+                <input type="text" name="first_name" id="id_first_name" placeholder="Имя" required
+                value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}">
+                {% if form.first_name.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                {% endif %}
+                <input type="text" name="last_name" id="id_last_name" placeholder="Фамилия" required
+                value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}">
+                {% if form.last_name.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                {% endif %}
+                <input type="text" name="username" id="id_username" placeholder="Имя пользователя" required
+                value="{% if form.username.value %}{{form.username.value}}{% endif %}">
+                {% if form.username.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.username.errors}}</div>
+                {% endif %}
+                <input type="email" name="email" id="id_email" placeholder="Почта" required
+                value="{% if form.email.value %}{{form.email.value}}{% endif %}">
+                {% if form.email.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.email.errors}}</div>
+                {% endif %}
+                {% comment %} <input type="tel" name="phone_number_input" id="" placeholder="Номер телефона"> {% endcomment %}
+                <input type="password" name="password1" id="id_password1" placeholder="Пароль" required
+                value="{% if form.password1.value %}{{form.password1.value}}{% endif %}">
+                {% if form.password1.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.password1.errors}}</div>
+                {% endif %}
+                <input type="password" name="password2" id="id_password2" placeholder="Подтвердите пароль" required
+                value="{% if form.password2.value %}{{form.password2.value}}{% endif %}">
+                {% if form.password2.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">{{form.password2.errors}}</div>
+                {% endif %}
                 <button>Зарегистрироваться</button>
             </div>
         </form>
