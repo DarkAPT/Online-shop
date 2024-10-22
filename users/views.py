@@ -16,6 +16,9 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
+                if request.POST.get('next',None):
+                    return HttpResponseRedirect(request.POST.get('next'))
+
                 return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserLoginForm()
@@ -67,3 +70,11 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('main:index'))
+
+
+def cart(request):
+    context = {
+        "title": "Корзина",
+    }
+
+    return render(request, 'users/cart.html', context)
