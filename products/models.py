@@ -41,8 +41,15 @@ class Products(models.Model):
         return '{:,}'.format(self.price).replace(',', ' ')
 
     def sell_price(self):
-        price = int(self.price - self.price * self.discount / 100)
-        return '{:,}'.format(price).replace(',', ' ')
+        if self.discount:
+            price = int(self.price - self.price * self.discount / 100)
+            return '{:,}'.format(price).replace(',', ' ')
+        return self.price
+
+    def sell_price_for_carts(self):
+        if self.discount:
+            return int(self.price - self.price * self.discount / 100)
+        return self.price
 
     @staticmethod
     def get_most_expensive_product():

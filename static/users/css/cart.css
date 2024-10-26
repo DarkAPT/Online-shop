@@ -46,6 +46,7 @@
 }
 
 .product_name{
+    width: 100%;
     margin-bottom: 2rem;
 }
 
@@ -119,14 +120,14 @@
 }
 
 .order{
-    width: 30rem;
+    width: 35rem;
     margin-left: 3rem;
     border: 1px solid black;
     background-color: white;
     border-radius: 50px;
     padding: 2%;
     height: fit-content;
-    min-height: 20rem;
+    min-height: 18rem;
 }
 
 .product_quantity{

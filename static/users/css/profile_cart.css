@@ -8,7 +8,7 @@
 }
 
 .cart_order{
-    width: max-content;
+    width: 35rem;
     border: 1px solid blue;
     background-color: white;
     border-radius: 50px;
@@ -57,4 +57,23 @@
 .btn-success:hover{
     background-color: green;
     color: white;
+}
+
+.order_prod{
+    display: grid;
+    grid-template-columns: 65% 15% 20%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid blue;
+}
+
+.order_prod:last-child{
+    border: none;
+}
+
+.order_prod_name{
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    padding-right: 0.5rem;
 }

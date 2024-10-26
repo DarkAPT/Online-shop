@@ -104,7 +104,9 @@
                 <div class="products" id='filtered-product'>
                         <div class="product">
                             <div class="product-img">
-                                <img src="{{ product.image.url }}" loading="lazy" alt="" >
+                                <a href="{% url "catalog:product" product.slug %}">
+                                    <img src="{{ product.image.url }}" loading="lazy" alt="" >
+                                </a>
                             </div>
                             <div class="product-info">
                                 <a href="{% url "catalog:product" product.slug %}">
@@ -127,10 +129,10 @@
                             <div class="product-purchase">
                                 {% if product.discount != 0%}
                                 <span class="new-price">{{ product.sell_price }}₽</span> <span class="old-price">{{ product.price_without_disc }}₽</span>
-                                <a href="#" class="view-more">В корзину</a>
+                                <a href="{% url "cart:cart_add" product.slug %}" class="view-more">В корзину</a>
                                 {% else %}
                                 <span class="new-price">{{ product.price_without_disc }}₽</span>
-                                <a href="#" class="view-more">В корзину</a>
+                                <a href="{% url "cart:cart_add" product.slug %}" class="view-more">В корзину</a>
                                 {% endif %}
                             </div>
                         </div>

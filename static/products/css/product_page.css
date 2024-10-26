@@ -91,7 +91,16 @@
 }
 
 .cart_button_favorite{
+    display: flex;
+    height: 50px;
     margin-top: 2rem;
+}
+
+.btn-primary{
+    display: flex;
+    height: 100%;
+    margin-right: 0.5rem;
+    align-items: center;
 }
 
 .cart_button{
