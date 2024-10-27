@@ -1,6 +1,7 @@
 {% load product_tags %}
 {% load static %}
 
+
 {% for product in products %}
 <div class="products" id='filtered-product'>
         <div class="product">
@@ -28,10 +29,15 @@
             <div class="product-purchase">
                 {% if product.discount != 0%}
                 <span class="new-price">{{ product.sell_price }}₽</span> <span class="old-price">{{ product.price_without_disc }}₽</span>
-                <a href="#" class="view-more">В корзину</a>
+                <a href="{% url "cart:cart_add" %}" class="view-more add-to-cart"
+                data-product-id="{{product.id}}">
+                В корзину
+                </a>
                 {% else %}
                 <span class="new-price">{{ product.price_without_disc }}₽</span>
-                <a href="#" class="view-more">В корзину</a>
+                <a href="{% url "cart:cart_add" %}" class="view-more add-to-cart" data-product-id="{{product.id}}">
+                    В корзину
+                </a>
                 {% endif %}
             </div>
         </div>

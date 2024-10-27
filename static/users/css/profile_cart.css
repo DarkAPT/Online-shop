@@ -8,7 +8,7 @@
 }
 
 .cart_order{
-    width: 35rem;
+    width: 30rem;
     border: 1px solid blue;
     background-color: white;
     border-radius: 50px;
@@ -76,4 +76,12 @@
     font-size: 14px;
     margin-bottom: 0.5rem;
     padding-right: 0.5rem;
+}
+
+.empty_cart{
+    text-align: center;
+    display: flex;
+    height: 12rem;
+    justify-content: center;
+    align-items: center;
 }

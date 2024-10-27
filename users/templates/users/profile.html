@@ -99,6 +99,7 @@
                         <h6>Цена</h6>
                     </div>
                     <div class="cart_products">
+                        {% if carts %}
                         {% for cart in carts %}
                         <div class="order_prod">
                             <span class="order_prod_name">{{cart.product.name}}</span>
@@ -106,13 +107,20 @@
                             <span>{{cart.product_price}}₽</span>
                         </div>
                         {%endfor%}
+                        {% else %}
+                        <div class="empty_cart">
+                            <h4>Корзина пуста<br> Добавьте товары, чтобы сделать заказ</h4>
+                        </div>
+                        {% endif %}
                 </div>
                 <div class="total_price">
+                    {% if carts %}
                     <div class="buttons">
                         <a href="#" class="btn btn-success">Заказать</a>
                         <a href="{% url "users:cart" %}" class="btn btn-primary">Изменить</a>
                     </div>
                     <h6>Итого: {{carts.total_price}}₽</h6>
+                    {% endif %}
                 </div>
             </div>
             {% comment %} <h3>Заказы</h3>

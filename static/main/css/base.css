@@ -278,3 +278,20 @@
     height: 4rem;
     object-fit: cover;
 }
+
+.products_cart_quantity{
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    text-align: center;
+}
+
+#products-in-cart-count{
+    font-size: 14px;
+}
+
+.right-nav-list a{
+    display: flex;
+}

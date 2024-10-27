@@ -13,7 +13,7 @@ $(document).ready(function(){
     let filter_object = {
         'category_slug': category_slug,  // Добавляем category_slug в объект фильтра
         'page': 1,
-        'q': query
+        'q': query,
     };
     $('.page_button').click(function() {
         let current_page = $(this).data("page");
