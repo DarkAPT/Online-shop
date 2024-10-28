@@ -1,0 +1,28 @@
+{% load carts_tags %}
+
+{% if carts %}
+    <div class="title"><h4>Ваша корзина</h4></div>
+    <div class="columns">
+            <h6>Товары({{carts.total_quantity}})</h6>
+            <h6>Кол-во</h6>
+            <h6>Цена</h6>
+        </div>
+        <div class="order_products">
+            {% for cart in carts %}
+            <div class="order_prod">
+                <span class="order_prod_name">{{cart.product.name}}</span>
+                <span>{{cart.quantity}}</span>
+                <span>{{cart.product_price}}₽</span>
+            </div>
+            {%endfor%}
+    </div>
+    <div class="total_price">
+        <a href="#" class="btn btn-primary">Заказать</a>
+        <h6>Итого: {{carts.total_price}}₽</h6>
+    </div>
+</div>
+{% else %}
+<div class="empty_cart">
+    <h4>Корзина пуста<br> Добавьте товары, чтобы сделать заказ</h4>
+</div>
+{%endif%}
