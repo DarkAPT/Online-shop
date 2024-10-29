@@ -95,4 +95,4 @@ class CharacteristicsSet(models.Model):
         verbose_name = 'Набор свойств'
 
     def __str__(self) -> str:
-        return f'{self.productid.name} - {self.propertyid.name}'
+        return f'{self.productid.name}'

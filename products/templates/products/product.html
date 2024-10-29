@@ -2,6 +2,10 @@
 {% load static %}
 {% load product_tags %}
 
+{% block meta %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock meta %}
+
 {% block title %} {{title}} {% endblock title %}
 
     {% block css %}
@@ -31,7 +35,6 @@
                 <div class="cart_button_favorite">
                     <a class="btn btn-primary add-to-cart" href="{% url "cart:cart_add" %}"
                     data-product-id="{{product.id}}">
-                    {% csrf_token %}
                     <span>В корзину</span>
                 </a>
                     <button class="favorite">

@@ -45,11 +45,9 @@
             <div class="right-nav-list">
                 <a href="#">Избранное</a>
                 <a href="{% url "users:cart" %}">Корзина 
-                    {% if carts.total_quantity and carts.total_quantity != 0 %}
                         <div class="products_cart_quantity">
                             <span id='products-in-cart-count'>{{carts.total_quantity}}</span>
                         </div>
-                    {% endif %}
                 </a>
                 {% if not user.is_authenticated %}
                 <a href="{% url "users:login" %}">Войти</a>      
@@ -64,7 +62,6 @@
             </div>
         </div>
     </header>
-    {% include "includes/notifications.html" %}
     {% block content %}{% endblock content %}
     <footer>
         <div class="footer-bar">

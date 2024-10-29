@@ -37,5 +37,7 @@ class Cart(models.Model):
         return self.product.sell_price_for_carts() * self.quantity
 
     def __str__(self) -> str:
-        return f'Корзина {self.user.username} - Товар {self.product.name} Количество {self.quantity}'
+        if self.user:
+            return f'Корзина {self.user.username} - Товар {self.product.name} Количество {self.quantity}'
+        return f'Корзина Гость - Товар {self.product.name} Количество {self.quantity}'
     

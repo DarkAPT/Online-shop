@@ -4,6 +4,7 @@ from PIL import Image
 
 class User(AbstractUser):
     image = models.ImageField(upload_to="users_images", blank=True, null=True, verbose_name='Аватарка')
+    
 
     class Meta:
         db_table = 'users'

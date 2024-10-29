@@ -4,7 +4,11 @@ from products.models import Categories,Products,Properties,PropertyValues,Charac
 
 admin.site.register(Properties)
 admin.site.register(PropertyValues)
-admin.site.register(CharacteristicsSet)
+
+class CharacteristicsSetTabAdmin(admin.TabularInline):
+    model = CharacteristicsSet
+    fields = ("propertyvalueid","propertyid")
+    search_fields = ("propertyvalueid",)
 
 
 @admin.register(Categories)
@@ -14,3 +18,18 @@ class CategoriesAdmin(admin.ModelAdmin):
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+
+    list_display = ['name', 'quantity', 'price','discount']
+    list_editable = ['price','discount']
+    search_fields = ['name']
+    inlines = [CharacteristicsSetTabAdmin,]
+
+@admin.register(CharacteristicsSet)
+class CharacteristicsSetAdmin(admin.ModelAdmin):
+    list_display = ['productid', 'propertyvalueid']
+    list_filter = ['propertyvalueid']
+
+    @admin.display()
+    def get_all_sets(self, obj):
+        property_values = CharacteristicsSet.objects.filter(productid=obj.productid).select_related('propertyvalueid').values_list('propertyvalueid__value', flat=True)
+        return ', '.join(list(property_values))
