@@ -37,6 +37,7 @@ def cart_add(request):
 
 
 def cart_change(request):
+    url_data = request.POST.get("url_data")
     cart_id = request.POST.get("cart_id")
     quantity = request.POST.get("quantity")
 
@@ -46,7 +47,10 @@ def cart_change(request):
     cart.save()
 
     user_cart = get_user_carts(request)
-    carts_items_html = render_to_string("users/async/cart_order.html", {"carts": user_cart}, request=request)
+    if url_data == "create_order":
+        carts_items_html = render_to_string("orders/async/create_order.html", {"carts": user_cart}, request=request)
+    else:
+        carts_items_html = render_to_string("users/async/cart_order.html", {"carts": user_cart}, request=request)
 
     response_data={
         "carts_items_html": carts_items_html,
@@ -57,6 +61,7 @@ def cart_change(request):
 
 
 def cart_remove(request):
+    url_data = request.POST.get("url_data")
     cart_id = request.POST.get("cart_id")
 
     cart = Cart.objects.get(id=cart_id)
@@ -64,7 +69,10 @@ def cart_remove(request):
 
     cart.delete()
     user_cart = get_user_carts(request)
-    carts_items_html = render_to_string("users/async/cart.html", {"carts": user_cart}, request=request)
+    if url_data == "create_order":
+        carts_items_html = render_to_string("orders/async/create_order.html", {"carts": user_cart}, request=request)
+    else:
+        carts_items_html = render_to_string("users/async/cart.html", {"carts": user_cart}, request=request)
 
     response_data={
         "carts_items_html": carts_items_html,

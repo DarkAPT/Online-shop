@@ -17,7 +17,7 @@
     <div class="title">
         <h4>Корзина{{ test_output }}</h4>
     </div>
-    <div class="cart" id="cart-items-container">
+    <div class="cart cart-order" >
         <div class="products">
             {% if carts %}
             {% for cart in carts %}
@@ -83,7 +83,7 @@
         </div>
 
         
-        <div class="order" id="cart_order">
+        <div class="order" id="cart-items-container">
             <div class="title"><h4>Ваша корзина</h4></div>
             <div class="columns">
                     <h6>Товары({{carts.total_quantity}})</h6>
@@ -100,7 +100,7 @@
                     {%endfor%}
             </div>
             <div class="total_price">
-                <a href="#" class="btn btn-primary">Заказать</a>
+                <a href="{% url "orders:create_order" %}" class="btn btn-primary">Заказать</a>
                 <h6>Итого: {{carts.total_price}}₽</h6>
             </div>
         </div>

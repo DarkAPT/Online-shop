@@ -16,7 +16,7 @@
     border-radius: 25px;
     background-color: white;
     padding: 1%;
-    min-width: 40rem;
+    min-width: 45rem;
     min-height: 20rem;
 
 }
@@ -72,6 +72,7 @@
     padding-top: 1rem;
     width: 100%;
     position: relative; 
+    align-items: center;
 }
 
 .product::after {

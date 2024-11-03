@@ -116,7 +116,7 @@
                 <div class="total_price">
                     {% if carts %}
                     <div class="buttons">
-                        <a href="#" class="btn btn-success">Заказать</a>
+                        <a href="{% url "orders:create_order" %}" class="btn btn-success">Заказать</a>
                         <a href="{% url "users:cart" %}" class="btn btn-primary">Изменить</a>
                     </div>
                     <h6>Итого: {{carts.total_price}}₽</h6>

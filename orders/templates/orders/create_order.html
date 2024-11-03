@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "users/css/cart.css" %}">
+<link rel="stylesheet" href="{% static "orders/css/create_order.css" %}">
+{% endblock css %}
+
+{% block content %}
+<div class="main">
+    <div class="p-4 mb-4 mx-2 custom-shadow">
+        <div class="container">
+            <h3 class="text-center mb-4">Выбранные товары</h3>
+            <div class="container cart-order" id="cart-items-container">
+                <!-- Разметка корзины -->
+                <div class="products">
+                    {% if carts %}
+                    {% for cart in carts %}
+                
+                        <div class="product">
+                            <div class="product_img">
+                                <a href="{% url "catalog:product" cart.product.slug %}">
+                                    <img src="{{ cart.product.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="product_name">
+                                <a href="{% url "catalog:product" cart.product.slug %}"><h6>{{ cart.product.name }}</h6></a>
+                                <div class="product_price_actions">
+                                    <div class="prod_price">
+                                        {% if cart.product.discount != 0%}
+                                        <span class="new-price">{{ cart.product.sell_price }}₽</span> <span class="old-price">{{ cart.product.price_without_disc }}₽</span>
+                                        {% else %}
+                                        <span class="new-price">{{ cart.product.price_without_disc }}₽</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="prod_actions">
+                                        <button class="favorite">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                            </svg>
+                                        </button>
+                                        <a class="trash remove-from-cart" href="{% url "cart:cart_remove" %}"
+                                        data-cart-id="{{cart.id}}">
+                                        {% csrf_token %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product_quantity">
+                                <div class="prod_quant">
+                                    <div class="minus">
+                                        <button id="minus " class="decrement" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                            {% csrf_token %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="quant">
+                                        <input class="number" inputmode="numeric" pattern="[0-9]*" type="number" name="" maxlength="4" value="{{cart.quantity}}" id="product_quantity" readonly>
+                                    </div>
+                                    <div class="plus">
+                                        <button id="plus " class="increment" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                            {% csrf_token %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product_total_price">
+                                <span>{{cart.product_price}}₽</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="total_price">
+                            <h6>Итого: {{carts.total_price}}₽</h6>
+                        </div>
+                </div>
+                {% endif %}
+                <!-- Закончилась разметка корзины -->
+            </div>
+        </div>
+        <!-- Детали заказа -->
+        <div class="container">
+            <h3 class="text-center order_details">Детали заказа</h3>
+            <div class="card mb-3 order_form">
+                <div class="card-body">
+                    <form action="{% url "orders:create_order" %}" method='post'>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_first_name" class="form-label">Имя*:</label>
+                                <input type="text" class="form-control" id="id_first_name"
+                                    name="first_name" required
+                                    value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}">
+                                    {% if form.first_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_last_name" class="form-label">Фамилия*:</label>
+                                <input type="text" class="form-control" id="id_last_name" name="last_name" required
+                                value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}">
+                                {% if form.last_name.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                            {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_phone_number" class="form-label">Номер телефона*:</label>
+                                <input type="text" class="form-control" id="id_phone_number" name="phone_number"
+                                    placeholder="В формате: XXX-XXX-XX-XX"
+                                    required
+                                    value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}">
+                                    {% if form.phone_number.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-3" id="deliveryAddressField">
+                                <label for="id_delivery_address" class="form-label">Адрес
+                                    доставки*:</label>
+                                <textarea class="form-control" id="id_delivery_address"
+                                    name="delivery_address" rows="2" required
+                                    value="{% if form.delivery_address.value %}{{form.delivery_address.value}}{% endif %}"></textarea>
+                                    {% if form.delivery_address.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.delivery_address.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Способ оплаты: </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payment_on_get"
+                                        id="id_payment_on_get" value="0" checked>
+                                    <label class="form-check-label" for="id_payment_on_get">Оплата
+                                        картой</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payment_on_get"
+                                        id="id_payment_on_get" value="1">
+                                    <label class="form-check-label" for="id_payment_on_get">Наличными/картой
+                                        при получении</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Оформить заказ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    var current_url = window.location.href;
+    var segments = current_url.split('/'); // Разделяем URL по '/'
+    var createOrder = segments[segments.length - 2];
+
     $(document).on("click", ".add-to-cart", function (e) {
         e.preventDefault();
 
@@ -52,6 +56,7 @@ $(document).ready(function(){
             data: {
                 cart_id: cart_id,
                 csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                url_data: createOrder,
             },
             success: function (data) {
                 
@@ -60,7 +65,7 @@ $(document).ready(function(){
                 goodsInCartCount.text(cartCount);
                 
                 // Меняем содержимое корзины на ответ от django (новый отрисованный фрагмент разметки корзины)
-                var cartItemsContainer = $("#cart-items-container");
+                var cartItemsContainer = $(".cart-order");
                 cartItemsContainer.html(data.carts_items_html);
                 
             },
@@ -95,6 +100,8 @@ $(document).ready(function(){
 
     // Обработчик события для увеличения значения
     $(document).on("click", ".increment", function () {
+        
+
         // Берем ссылку на контроллер django из атрибута data-cart-change-url
         var url = $(this).data("cart-change-url");
         // Берем id корзины из атрибута data-cart-id
@@ -120,6 +127,7 @@ $(document).ready(function(){
                 cart_id: cartID,
                 quantity: quantity,
                 csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                url_data: createOrder,
             },
 
             success: function (data) {
@@ -131,7 +139,7 @@ $(document).ready(function(){
                 goodsInCartCount.text(cartCount);
 
                 // Меняем содержимое корзины
-                var cartItemsContainer = $("#cart_order");
+                var cartItemsContainer = $("#cart-items-container");
                 cartItemsContainer.html(data.carts_items_html);
 
             },

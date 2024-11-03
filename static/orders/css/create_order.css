@@ -1,0 +1,48 @@
+.main{
+    background-color: rgb(210, 230, 251);
+    display: flex;
+    justify-content: center;
+
+}
+
+.container{
+    width: 55rem;
+    margin: 0;
+    padding: 0;
+}
+
+.order_form{
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.product_name{
+    width: 60%;
+}
+
+.product_total_price{
+    text-align: center;
+    margin-left: 1rem;
+    width: 7rem;
+}
+
+.order_details{
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.total_price{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 1rem;
+}
+
+.product{
+    padding-inline: 1rem;
+}
+
+.products{
+    min-height: 0;
+}
