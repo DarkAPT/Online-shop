@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load product_tags %}
+{% load carts_tags %}
 
 {% block meta %}
 <meta name="csrf-token" content="{{ csrf_token }}">
@@ -32,15 +33,54 @@
                 {% else %}
                 <span class="new-price">{{ product.price_without_disc }}₽</span>
                 {% endif %}
-                <div class="cart_button_favorite">
-                    <a class="btn btn-primary add-to-cart" href="{% url "cart:cart_add" %}"
-                    data-product-id="{{product.id}}">
-                    <span>В корзину</span>
-                </a>
-                    <button class="favorite">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                <div class="cart_button_favourite">
+                    {% product_in_cart request product.id as prod_in_cart%}
+                    {% if prod_in_cart %}
+                    {% for cart in prod_in_cart %}
+                    <div class="prod_quant" id="prod_quant">
+                        <div class="minus">
+                            <button id="minus " class="decrement" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                {% csrf_token %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="quant">
+                            <input class="number" inputmode="numeric" pattern="[0-9]*" type="number" name="" maxlength="4" value="{{cart.quantity}}" id="product_quantity" readonly>
+                        </div>
+                        <div class="plus">
+                            <button id="plus " class="increment" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" data-max-quant="{{cart.product.quantity}}">
+                                {% csrf_token %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    {% if product.quantity == 0 %}
+                    <h5>Товара нет в наличии</h5>
+                    {% else %}
+                    <div class="prod_quant" >
+                        <a href="{% url "cart:cart_add" %}" class="view-more add-to-cart" id="cart_button"
+                        data-product-id="{{product.id}}">
+                        В корзину</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {%product_in_favourites request product.id as prod_in_fav%}
+                    <button class="favourites_add_remove" data-product-id="{{product.id}}" data-favourites-add-remove-url="{% url "cart:favourites_add_remove" %}" id="toggle-heart-button">
+                        {% if prod_in_fav %}
+                        <svg xmlns="http://www.w3.org/2000/svg" id="heart-svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
                           </svg>
+                          {% else %}
+                          <svg xmlns="http://www.w3.org/2000/svg" id="heart-svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                          </svg>
+                        {% endif %}
                     </button>
                 </div>
             </div>

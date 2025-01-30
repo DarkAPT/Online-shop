@@ -9,6 +9,7 @@ $(document).ready(function(){
     if (query.length > 1 && query[1].split("=")[0] === "q") {
         query = decodeURIComponent(query[1].split("=")[1]); // Декодируем строку
     }
+    const csrftoken = $('meta[name="csrf-token"]').attr('content');
 
     let filter_object = {
         'category_slug': category_slug,  // Добавляем category_slug в объект фильтра

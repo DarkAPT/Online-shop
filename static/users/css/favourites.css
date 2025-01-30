@@ -1,0 +1,182 @@
+.main{
+    padding-top: 5%;
+    background-color: rgb(210, 230, 251);
+    padding-bottom: 5%;
+}
+
+a{
+    text-decoration: none;
+}
+
+.title_f{
+    font-size: 72px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5%;
+}
+
+.card-content,
+.img-content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.img-content{
+    width: 12rem;
+    height: 12rem;
+    margin-top: 1rem;
+    flex-direction: row-reverse;
+}
+
+.card{
+    background-color: white;
+    padding: 1em;
+    border-color: rgb(34, 0, 255);
+    border-radius: 1em;
+    max-width: 17rem;
+    padding-bottom: 1.5rem;
+}
+
+.card-img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 3px;
+}
+
+.card-content{
+    color: rgb(0, 119, 255);
+    text-align: center;
+}
+
+.card-content a:hover{
+    color: gold;
+}
+
+.product_name{
+    height: 4rem;
+    margin-bottom: 0;
+}
+
+.prod_quant{
+    margin-bottom: 2rem;
+}
+
+.new-price{
+    color: gold;
+    font-size: 1.5rem;
+}
+
+.old-price{
+    color: rgb(0, 119, 255);
+    text-decoration: line-through;
+    
+}
+
+.view-more{
+    border: solid;
+    text-decoration: none;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border-color: rgb(0, 119, 255);
+    color: rgb(0, 119, 255);
+    margin-bottom: 1rem;
+}
+
+.view-more:hover{
+    color: gold;
+    border-color: gold;
+}
+
+.products{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding-inline: 5%;
+}
+
+.product{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18rem;
+    height: 26rem;
+    background-color: white;
+    margin-right: 2rem;
+    border-radius: 10%;
+    margin-bottom: 5rem;
+}
+
+.price{
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.product_quantity{
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.prod_quant{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    
+}
+
+.quant{
+    height: 100%;
+}
+
+.quant input{
+    height: 100%;
+    width: 3.5rem;
+    margin-inline: 0.5rem;
+    text-align: center;
+    background-color: rgb(210, 230, 251);
+    border: 1px solid rgb(74, 74, 255);
+    border-radius: 5px;
+}
+
+.plus button, .minus button{
+    display: flex;
+    border: 1px solid transparent;
+    background-color: rgb(210, 230, 251);
+    border-radius: 5px;
+}
+
+.plus button:hover, .minus button:hover{
+    border: 1px solid blue;
+}
+
+.plus button svg, .minus button svg{
+    color: blue;
+}
+
+.favourites_add_remove{
+    position: absolute;
+    margin-top: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 50%;
+}
+
+.favourites_add_remove svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+.fav_svg{
+    height: 100%;
+}
+
+.favourites_add_remove:hover svg{
+    fill: red;
+}
+
+.favourites_add_remove:hover{
+    border: 1px solid red;
+}

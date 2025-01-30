@@ -42,8 +42,13 @@
                 </form>
             </div>
             {% user_carts request as carts %}
+            {% user_favourites request as favourites%}
             <div class="right-nav-list">
-                <a href="#">Избранное</a>
+                <a href="{% url "users:favourites" %}">Избранное
+                    <div class="products_cart_quantity">
+                        <span id='products-in-favourites-count'>{{favourites.total_quantity}}</span>
+                    </div>
+                </a>
                 <a href="{% url "users:cart" %}">Корзина 
                         <div class="products_cart_quantity">
                             <span id='products-in-cart-count'>{{carts.total_quantity}}</span>

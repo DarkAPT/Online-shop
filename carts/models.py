@@ -40,4 +40,18 @@ class Cart(models.Model):
         if self.user:
             return f'Корзина {self.user.username} - Товар {self.product.name} Количество {self.quantity}'
         return f'Корзина Гость - Товар {self.product.name} Количество {self.quantity}'
+
+class FavouritesQuerySet(models.QuerySet):
+    def total_quantity(self):
+        if self:
+            return self.count()
+        return 0
+
+
+class Favourites(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank = True, null = True)
+    product = models.ForeignKey(to=Products, on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=32,blank=True, null=True)
+
+    objects = FavouritesQuerySet().as_manager()
     

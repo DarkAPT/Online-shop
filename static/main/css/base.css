@@ -288,7 +288,7 @@
     text-align: center;
 }
 
-#products-in-cart-count{
+#products-in-cart-count, #products-in-favourites-count{
     font-size: 14px;
 }
 

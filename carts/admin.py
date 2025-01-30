@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from carts.models import Cart
+from carts.models import Cart, Favourites
 
 
 class CartTabAdmin(admin.TabularInline):
@@ -14,3 +14,5 @@ class CartTabAdmin(admin.TabularInline):
 class CartAdmin(admin.ModelAdmin):
     list_display = ["user", "product", "quantity", "created_date",]
     list_filter = ["user", "product__name"]
+
+admin.site.register(Favourites)

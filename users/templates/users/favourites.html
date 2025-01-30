@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% load carts_tags %}
+
+{% block meta %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock meta %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "users/css/favourites.css" %}">
+{% endblock css %}
+
+{% block content %}
+
+<div class="main">
+    <div class="title_f"><h3>Избранное</h3></div>
+    <div class="products" id="favourites_products">
+            {% user_favourites request as favourites %}
+            {% for favourite in favourites %}
+            <div class="product">
+                    <div class="img-content">
+                        <div class="fav_svg">
+                            <button class="favourites_add_remove" data-product-id="{{favourite.product.id}}" data-favourites-add-remove-url="{% url "cart:favourites_add_remove" %}" id="toggle-heart-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                  </svg>
+                            </button>
+                        </div>
+                            <a href="{% url "catalog:product"  favourite.product.slug %}">
+                                <img src="{{  favourite.product.image.url }}" loading="lazy" alt="" class="card-img">
+                            </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="{% url "catalog:product" favourite.product.slug %}">
+                            <div class="product_name">
+                                <span>{{ favourite.product.name|truncatechars:50 }}</span>
+                            </div>
+                        </a>
+                        <div class="price">
+                            {% if favourite.product.discount != 0%}
+                            <span class="new-price">{{favourite.product.sell_price}}₽</span> <span class="old-price">{{favourite.product.price_without_disc}}₽</span>
+                            {% else %}
+                            <span class="new-price">{{favourite.product.price_without_disc}}₽</span>
+                            {%endif%}
+                        </div>
+                        {% if favourite.product.quantity == 0 %}
+                        <h5>Товара нет в наличии</h5>
+                        {% else %}
+                            {% product_in_cart request favourite.product.id as prod_in_cart%}
+                            {% if prod_in_cart %}
+                            {% for cart in prod_in_cart %}
+                            <div class="prod_quant">
+                                <div class="minus">
+                                    <button id="minus " class="decrement" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}">
+                                        {% csrf_token %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="quant">
+                                    <input class="number" inputmode="numeric" pattern="[0-9]*" type="number" name="" maxlength="4" value="{{cart.quantity}}" id="product_quantity" readonly>
+                                </div>
+                                <div class="plus">
+                                    <button id="plus " class="increment" data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" data-max-quant="{{cart.product.quantity}}">
+                                        {% csrf_token %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                                <div class="prod_quant">
+                                    <a href="{% url "cart:cart_add" %}" class="view-more add-to-cart"
+                                    data-product-id="{{favourite.product.id}}">
+                                    В корзину</a>
+                                </div>
+                                {% endif %}
+                        {% endif %}
+                    </div>
+            </div>
+            {%endfor%}
+    </div>
+</div>
+{% endblock content %}

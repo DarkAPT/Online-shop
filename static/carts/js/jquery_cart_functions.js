@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     $(document).on("click", ".add-to-cart", function (e) {
         e.preventDefault();
+        var cartItem = $(this).closest('.prod_quant');
 
         var productsInCartCount = $("#products-in-cart-count");
         var cartCount = parseInt(productsInCartCount.text() || 0);
@@ -25,6 +26,8 @@ $(document).ready(function(){
                 // Увеличиваем количество товаров в корзине (отрисовка в шаблоне)
                 cartCount++;
                 productsInCartCount.text(cartCount);
+                cartItem.html(data.prod_quant);
+                
             },
 
             error: function (xhr, status, error) {
@@ -104,6 +107,7 @@ $(document).ready(function(){
 
         // Берем ссылку на контроллер django из атрибута data-cart-change-url
         var url = $(this).data("cart-change-url");
+        var max_q = $(this).data("max-quant")
         // Берем id корзины из атрибута data-cart-id
         var cartID = $(this).data("cart-id");
         // Ищем ближайшеий input с количеством 
@@ -112,11 +116,13 @@ $(document).ready(function(){
         // Берем значение количества товара
         var currentValue = parseInt($input.val());
 
-        $input.val(currentValue + 1);
-
-        // Запускаем функцию определенную ниже
-        // с аргументами (id карты, новое количество, количество уменьшилось или прибавилось, url)
-        updateCart(cartID, currentValue + 1, 1, url);
+        if (currentValue < max_q) {
+            $input.val(currentValue + 1);
+            // Запускаем функцию определенную ниже
+            // с аргументами (id карты, новое количество, количество уменьшилось или прибавилось, url)
+            updateCart(cartID, currentValue + 1, 1, url);
+        }
+        
     });
 
     function updateCart(cartID, quantity, change, url) {
@@ -126,7 +132,7 @@ $(document).ready(function(){
             data: {
                 cart_id: cartID,
                 quantity: quantity,
-                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                csrfmiddlewaretoken: $('meta[name="csrf-token"]').attr('content'),
                 url_data: createOrder,
             },
 
@@ -149,5 +155,44 @@ $(document).ready(function(){
         });
     }
 
+    $(document).on("click", ".favourites_add_remove", function () {
+        var url = $(this).data("favourites-add-remove-url");
+
+        var productsInFavouritesCount = $("#products-in-favourites-count");
+        var product_id = $(this).data("product-id");
+
+        const csrftoken = $('meta[name="csrf-token"]').attr('content');
+
+        const svg = this.querySelector('svg');
+        const path = svg.querySelector('.heart-path'); // Найдем путь внутри SVG
+  
+        // Проверяем состояние текущего SVG
+        if (svg.getAttribute('fill') === 'currentColor') {
+          svg.setAttribute('fill', 'red');  // Заполняем сердце
+          }
+          else {
+          svg.setAttribute('fill', 'currentColor');  // Убираем заполнение
+        }
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: csrftoken,
+            },
+            success: function (data) {
+                productsInFavouritesCount.text(data.favourites_count);
+
+                var favouritesItemsContainer = $("#favourites_products");
+                favouritesItemsContainer.html(data.favourites_items);
+            },
+
+            error: function (xhr, status, error) {
+                console.error("Ошибка при добавлении товара:", error); // Для отладки
+            }
+        });
+
+    })
     
 })

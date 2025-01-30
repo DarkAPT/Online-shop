@@ -296,7 +296,6 @@ input[type="range"]::-webkit-slider-thumb{
     height: 13rem;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     border: 2px solid rgb(101, 173, 255);
     border-radius: 20px;
     background-color: white;
@@ -306,6 +305,29 @@ input[type="range"]::-webkit-slider-thumb{
 
 .product-img{
     width: 210px;
+    height: 190px;
+    margin-left: 1rem;
+    display: flex;
+    position: relative;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.fav_svg{
+    margin-right: 1rem;
+}
+
+.favourites_add_remove{
+    position: absolute;
+    margin-top: 0.5rem;
+    border: 0px;
+    background-color: transparent;
+}
+
+.favourites_add_remove svg{
+    width: 24px;
+    height: 24px;
+    transition: fill 1s;
 }
 
 .product-img img{
@@ -324,6 +346,7 @@ input[type="range"]::-webkit-slider-thumb{
 .product-info{
     width: 50%;
     text-align: left;
+    margin-left: 2rem;
 }
 
 .product-info a{
@@ -345,8 +368,11 @@ input[type="range"]::-webkit-slider-thumb{
 }
 
 .product-purchase{
+    width: 8rem;
     display: flex;
     flex-direction: column;
+    margin-left: 2rem;
+    align-items: center;
 }
 
 .new-price{
@@ -459,4 +485,47 @@ input[type="range"]::-webkit-slider-thumb{
 
 .search_button{
     border:1px solid #fff;
+}
+
+
+.product_quantity{
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.prod_quant{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin-top: 1rem;
+}
+
+.quant{
+    height: 100%;
+}
+
+.quant input{
+    height: 100%;
+    width: 3.5rem;
+    margin-inline: 0.5rem;
+    text-align: center;
+    background-color: rgb(210, 230, 251);
+    border: 1px solid rgb(74, 74, 255);
+    border-radius: 5px;
+}
+
+.plus button, .minus button{
+    display: flex;
+    border: 1px solid transparent;
+    background-color: rgb(210, 230, 251);
+    border-radius: 5px;
+}
+
+.plus button:hover, .minus button:hover{
+    border: 1px solid blue;
+}
+
+.plus button svg, .minus button svg{
+    color: blue;
 }

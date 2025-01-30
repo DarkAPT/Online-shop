@@ -42,8 +42,8 @@
 .brand_img img{
     box-shadow: 0 0 5px black;
     border-radius: 20px;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 150px;
+    max-height: 150px;
     padding: 5px 5px 5px 5px;
 }
 
@@ -89,10 +89,11 @@
     margin-left: 5px;
 }
 
-.cart_button_favorite{
+.cart_button_favourite{
     display: flex;
     height: 50px;
     margin-top: 2rem;
+    align-items: center;
 }
 
 .btn-primary{
@@ -102,35 +103,39 @@
     align-items: center;
 }
 
-.cart_button{
+#cart_button{
     border: 0px;
     border-radius: 10px;
-    width: 150px;
+    width: 120px;
     height: 50px;
     background-color: rgb(73 156 252);
     color: white;
-    margin-bottom: 3rem;
 }
 
-.cart_button:hover{
+.prod_quant a{
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#cart_button:hover{
     background-color: blue;
     color: white;
 }
 
-.favorite{
+.favourites_add_remove{
+    margin-left: 1rem;
     border: 0px;
     border-radius: 10px;
     height: 50px;
     width: 50px;
 }
 
-.favorite:hover svg{
-    color: red;
-}
-
-.favorite svg{
+.favourites_add_remove svg{
     width: 22px;
     height: 22px;
+    transition: fill 1s;
 }
 
 .description{
@@ -190,4 +195,40 @@
 
 .search_button{
     border:1px solid #fff;
+}
+
+
+.prod_quant{
+    display: flex;
+    align-items: center;
+    height: 30px; 
+}
+
+.quant{
+    height: 100%;
+}
+
+.quant input{
+    height: 100%;
+    width: 3.5rem;
+    margin-inline: 0.5rem;
+    text-align: center;
+    background-color: rgb(210, 230, 251);
+    border: 1px solid rgb(74, 74, 255);
+    border-radius: 5px;
+}
+
+.plus button, .minus button{
+    display: flex;
+    border: 1px solid transparent;
+    background-color: rgb(210, 230, 251);
+    border-radius: 5px;
+}
+
+.plus button:hover, .minus button:hover{
+    border: 1px solid blue;
+}
+
+.plus button svg, .minus button svg{
+    color: blue;
 }

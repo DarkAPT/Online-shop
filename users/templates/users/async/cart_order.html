@@ -17,7 +17,7 @@
             {%endfor%}
     </div>
     <div class="total_price">
-        <a href="#" class="btn btn-primary">Заказать</a>
+        <a href="{% url "orders:create_order" %}" class="btn btn-primary">Заказать</a>
         <h6>Итого: {{carts.total_price}}₽</h6>
     </div>
 </div>

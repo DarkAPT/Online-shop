@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.db.models import F, ExpressionWrapper, FloatField
+from carts.models import Cart
+from carts.utils import product_in_cart_util
 from products.utils import q_search
 from products.models import Products,Properties,PropertyValues,Categories
 from products.utils import model,vectorizer
@@ -51,21 +53,18 @@ def catalog(request, category_slug, page=1):
 
 def filter_product(request):
     filter_param = request.GET.getlist('filter[]')
-    if 'order_by' in request.GET:
-        order_by = request.GET['order_by']
-    else:
-        order_by = 'new'
-
+    order_by = request.GET.get('order_by', 'new')
     category_slug = request.GET.get('category_slug')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     query = request.GET.get('q', None)
     page = request.GET.get('page')
 
+
+    products = Products.objects.filter(categoryid__slug=category_slug)
     if query:
         products = q_search(query)
-    else:
-        products = Products.objects.filter(categoryid__slug=category_slug)
+
     # Если есть параметр фильтра, применяем фильтрацию к товарам
     if filter_param:
         combined_queryset = products
@@ -100,13 +99,24 @@ def filter_product(request):
             price_with_disc=ExpressionWrapper(
         F('price') - (F('price') * F('discount') / 100),
         output_field=FloatField()
-    )).filter(price_with_disc__gte=min_price).filter(price_with_disc__lte=max_price)
+    ))
+        if min_price:
+            products = products.filter(price_with_disc__gte=min_price)
+        if max_price:
+            products = products.filter(price_with_disc__lte=max_price)
+
 
     if products:
         paginator = Paginator(products,4)
         current_page = paginator.page(page)
+        prod_in_cart = []
+        carts = Cart.objects.none()
+        for prod in products:
+            if product_in_cart_util(request, prod.id):
+                prod_in_cart.append(prod.id)
+                carts |= product_in_cart_util(request, prod.id)
 
-        data = render_to_string('products/async/catalog.html', {'products':current_page})
+        data = render_to_string('products/async/catalog.html', {'products':current_page, "request":request})
     else:
         data = render_to_string('products/async/not_found_page.html')
     return JsonResponse({"data": data})

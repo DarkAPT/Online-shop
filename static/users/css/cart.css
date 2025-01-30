@@ -107,7 +107,7 @@
     display: flex;
 }
 
-.favorite, .trash{
+.favourites_add_remove, .trash{
     align-items: center;
     display: flex;
     justify-content: center;
@@ -120,15 +120,16 @@
     background-color: rgb(210, 230, 251);
 }
 
-.favorite:hover svg{
-    color: red;
+.favourites_add_remove svg{
+    transition: fill 1s;
+
 }
 
 .trash:hover svg{
     color: blue;
 }
 
-.favorite svg, .trash svg{
+.favourites_add_remove svg, .trash svg{
     width: 22px;
     height: 22px;
 }
@@ -154,6 +155,7 @@
     display: flex;
     align-items: center;
     height: 30px;
+    
 }
 
 .quant{
