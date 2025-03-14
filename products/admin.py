@@ -1,9 +1,13 @@
 from django.contrib import admin
 
-from products.models import Categories,Products,Properties,PropertyValues,CharacteristicsSet
+from products.models import Categories,Products,Properties,PropertyValues,CharacteristicsSet, Review
 
 admin.site.register(Properties)
 admin.site.register(PropertyValues)
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['user_id', 'product_id', 'message', 'mark', 'is_anonymous', 'create_data']
 
 class CharacteristicsSetTabAdmin(admin.TabularInline):
     model = CharacteristicsSet

@@ -32,8 +32,7 @@ urlpatterns = [
 
 
 
-    path('filter-products/', views.filter_product, name='filter-product'),
-    path('products_ordering/', views.products_ordering, name='products_ordering'),
+    path('filter-products/', views.ProductFiltersView.as_view(), name='filter-product'),
 ]
 
 

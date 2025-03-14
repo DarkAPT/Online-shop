@@ -16,7 +16,7 @@ class User(AbstractUser):
         return self.username
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Сначала сохраняем объект, чтобы получить путь к изображению
+        super().save(*args, **kwargs)
 
         if self.image:
             # Открываем изображение

@@ -3,11 +3,17 @@
     padding: 0;
 }
 
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
 .main{
     display: flex;
     margin-top: 3rem;
     margin-right: 2rem;
     margin-left: 2rem;
+    margin-bottom: 2rem;
 }
 
 .left_part{
@@ -231,4 +237,269 @@
 
 .plus button svg, .minus button svg{
     color: blue;
+}
+
+.checked svg{
+    /* fill: rgb(73 156 252); */
+    fill: gold;
+}
+.fa-star svg, .star svg{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.stars{
+    margin-top: 1rem;
+    width: fit-content;
+    user-select: none;
+}
+
+.stars:hover{
+    cursor: pointer;
+}
+
+.stars_container{
+    display: flex;
+    justify-content: center;
+}
+
+.fa-star:hover{
+    cursor: pointer;
+}
+
+.stars .fa-star.active svg {
+    fill: gold;
+}
+
+.fa-star{
+    padding-right: 0.5rem;
+}
+
+.fa-star input{
+    display: none;
+}
+
+.review{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+    align-content: flex-start;
+
+}
+
+.product_rating_stars:hover{
+    cursor:default;
+}
+
+.product_rating{
+    display: flex;
+    align-items: center;
+    user-select: none;
+    flex-direction: column;
+}
+
+.product_rating_number{
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+#rating{
+    margin-right: 0.5rem;
+}
+
+.product_rating_number span{
+    font-size: 2rem;
+}
+
+.review_form{
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        /* overflow: auto; Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.review_form_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fefefe;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 40px;
+    width: 38rem; /* Could be more or less, depending on screen size */
+}
+
+.close svg{
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid transparent;
+}
+
+.close svg:hover{
+    border: 1px solid red;
+    border-radius: 50%;
+    cursor: pointer;
+    fill: red;
+}
+
+.comment_div{
+    margin-top: 2rem;
+}
+
+.comment_div textarea::placeholder{
+    text-align: center;
+}
+
+.comment_div textarea{
+    padding-top: 1rem;
+    border: 1px solid;
+    border-radius: 10px;
+    width: 27rem;
+    min-height: 3rem;
+    padding-inline: 1rem;
+    resize: none;  /* Отключение возможности ручного изменения размера */
+    overflow: hidden;
+}
+
+.product_view_img img{
+    width: 7rem;
+}
+
+.product_info{
+    margin-inline: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.review_header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Добавим relative для позиционирования кнопки */
+}
+
+.close {
+    position: absolute;
+    right: 0; /* Позиционируем кнопку закрытия максимально справа */
+    display: flex;
+    align-items: center; /* Выравнивание по центру вертикали */
+}
+
+.product_view_img{
+    margin-right: 1rem;
+}
+
+.anonymous{
+    margin-top: 2rem;
+}
+
+.anonymous input{
+    transform: scale(1.3);
+    margin-right: 0.5rem;
+}
+
+.submit_review{
+    display: flex;
+    margin-top: 1rem;
+    width: 100%;
+    height: 3.5rem;
+    background-color: rgb(73 156 252);
+    border: 1px solid transparent;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.submit_review:disabled, .submit_review:disabled:hover{
+  background-color: gray;
+  color: lightgray;
+  cursor: not-allowed;
+}
+
+.submit_review:hover{
+    background-color: rgb(65, 131, 208);
+}
+
+.anonymous_label{
+    display: flex;
+    width: fit-content;
+}
+
+.anonymous_label:hover{
+    cursor: pointer;
+}
+
+
+.own_review_button, .review_header h2,.anonymous_label h5{
+    user-select: none;
+}
+
+.star_rate{
+    margin-right: 0.5rem;
+}
+
+.own_review_button button{
+    background-color: gold;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    margin-top: 1rem;
+    width: 14rem;
+    height: 4rem;
+}
+
+.comments{
+    margin-left: 2rem;
+}
+
+.container_review{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.container_1{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.username{
+    font-size: 1.2rem;
+}
+
+.container_1_1{
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment{
+    margin-bottom: 0.5rem;
+}
+
+.user_message{
+    margin-top: 0.5rem;
+}
+
+.date{
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.hidden_span{
+    display: none;
 }

@@ -24,6 +24,7 @@ $(document).ready(function(){
         let action = $(this).data('action');
         filter_object.order_by = action;
         filter_object.page = 1
+
     })
     $('.price_button').click(function() {
         let max_price = document.querySelector(".input-max").value;
@@ -34,9 +35,14 @@ $(document).ready(function(){
     })
     $('.next_page').click(function() {
         filter_object.page = filter_object.page+1
+        console.log(1);
     })
     $(".filter-checkbox, .first_page").click(function(){
         filter_object.page = 1
+    })
+    $(".filter-checkbox, .first_page, .next_page, .price_button, .page_button").click(function(){
+        const button = document.querySelector('#selectText .btn-action');
+        filter_object.order_by = (button.getAttribute('data-action'));
     })
     $(".filter-checkbox, .btn-action, .price_button, .page_button, .first_page, .next_page").on("click", function(){
         $(".filter-checkbox").each(function(){

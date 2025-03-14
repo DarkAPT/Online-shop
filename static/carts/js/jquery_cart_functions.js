@@ -145,7 +145,7 @@ $(document).ready(function(){
                 goodsInCartCount.text(cartCount);
 
                 // Меняем содержимое корзины
-                var cartItemsContainer = $("#cart-items-container");
+                var cartItemsContainer = $(".cart-order");
                 cartItemsContainer.html(data.carts_items_html);
 
             },

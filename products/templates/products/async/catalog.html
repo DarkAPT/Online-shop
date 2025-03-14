@@ -137,7 +137,8 @@
             filter_object.page = filter_object.page+1
         })
         $(".page_button, .first_page, .next_page").on("click", function(){
-
+            const button = document.querySelector('#selectText .btn-action');
+            filter_object.order_by = (button.getAttribute('data-action'));
             let max_price = document.querySelector(".input-max").value;
             let min_price = document.querySelector(".input-min").value;
             filter_object.min_price = min_price;

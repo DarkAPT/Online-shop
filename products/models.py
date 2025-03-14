@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Categories(models.Model):
     name = models.CharField(max_length=150, unique=True)
@@ -55,6 +57,13 @@ class Products(models.Model):
     def get_most_expensive_product():
         return Products.objects.order_by('-price').first()
 
+    def get_average_rating(self):
+        reviews = self.reviews.all()
+        if reviews.exists():
+            total_rating = sum([review.mark for review in reviews])
+            return [round(total_rating / len(reviews),2), len(reviews)]
+        return None
+
 
 
 class Properties(models.Model):
@@ -96,3 +105,15 @@ class CharacteristicsSet(models.Model):
 
     def __str__(self) -> str:
         return f'{self.productid.name}'
+
+class Review(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Products, on_delete=models.CASCADE, related_name='reviews')
+    create_data = models.DateTimeField(auto_now_add=True, verbose_name="Дата оценки")
+    message = models.CharField(max_length=1000, blank=True, null=True)  # Добавлено поле message
+    mark = models.FloatField()  # Добавлено поле mark
+    is_anonymous = models.BooleanField(default=False)  # Добавлено поле is_anonymous
+
+    def get_date(self):
+        return self.create_data.date()
+    

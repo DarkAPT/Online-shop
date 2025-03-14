@@ -112,9 +112,140 @@
         </div>
     </div>
 </div>
+<div class="container_review">
+    <div class="comments">
+        {% get_comments product.id as comments%}
+        {% for comment in comments %}
+        <div class="comment">
+            <div class="container_1">
+                <div class="user_img">
+                    {%if not comment.user.image or comment.is_anonymous%}
+                    <img src="{% static "users/images/user_default_icon.jpg" %}" alt="">
+                    {% else %}
+                    <img src="{{comment.user.image.url}}" alt="">
+                    {% endif %}
+                </div>
+                <div class="container_1_1">
+                    <div class="user_name_rating">
+                        <span class="username">{% if not comment.is_anonymous %}{{comment.user.username}}{% else %}Анонимный отзыв{% endif %} <span class="date">{{comment.get_date}}</span></span>
+                        <span class="hidden" data-rating="{{ comment.mark }}"></span>
+                    </div>
+                    <div class="user_message">
+                        <span>{{comment.message}}</span>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>     
+        {% endfor %}
+
+    </div>
+    <div class="review">
+        <div class="product_rating">
+            <div class="product_rating_number">
+                <span id="rating" data-rating="{{ average_rating }}">{{ average_rating }}</span>
+                <div id="star-container"></div>
+            </div>
+            <span>Количество оценок: {% if review_count %}{{ review_count }}{% else %}0{% endif %}</span>
+        </div>
+        <div class="own_review_button">
+            {% if user.is_authenticated %}
+            <button id="open_review_button">Оставить отзыв</button>
+            {% else %}
+            <button id="open_review_button">
+                <a href="{% url "users:login" %}" >Оставить отзыв</a>   
+            </button>
+            {% endif %}
+        </div>
+        <div class="review_form" id="review_form">
+            <div class="review_form_container">
+                <div class="review_header">
+                    <h2>Отзыв</h2>
+                    <div class="close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                    </div>
+                </div>
+                <div class="product_info">
+                    <div class="product_view_img">
+                        <img src="{{ product.image.url }}" alt="{{product.name}}">
+                    </div>
+                    <div class="product_name">
+                        <span>{{ product.name }}</span>
+                    </div>
+                </div>
+                {% get_review request product.id as form%}
+            <form action="{% if form %}{% url "products:update_review"%}{% else %}{% url "products:review" %}{% endif %}" method="post">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                {% csrf_token %}
+                
+                <div class="stars_container">
+                    <div class="stars">
+                        {% if form.mark %}
+                        <span class="hidden_span" value="{{form.mark}}"></span>
+                        {% endif %}
+                        <label for="star1" onclick="gfg(1)" class="fa-star">
+                            <input type="radio" name="mark" id="star1" value="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+                        </label>
+            
+                        <label for="star2" onclick="gfg(2)" class="fa-star">
+                            <input type="radio" name="mark" id="star2" value="2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+                        </label>
+            
+                        <label for="star3" onclick="gfg(3)" class="fa-star">
+                            <input type="radio" name="mark" id="star3" value="3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+                        </label>
+            
+                        <label for="star4" onclick="gfg(4)" class="fa-star">
+                            <input type="radio" name="mark" id="star4" value="4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+                        </label>
+            
+                        <label for="star5" onclick="gfg(5)" class="fa-star">
+                            <input type="radio" name="mark" id="star5" value="5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+                <div class="comment_div">
+                    <textarea name="message" id="id_message" placeholder="Напишите свои мысли о купленном товаре"
+                    >{% if form.message %}{{form.message}}{% endif %}</textarea>
+                </div>
+                <div class="anonymous">
+                    <label class="anonymous_label">
+                        <input type="checkbox" id="is_anonymous" name="is_anonymous"{% if form.is_anonymous %} checked {% endif %}>
+                        <h5>Анонимный отзыв</h5>
+                    </label>
+                </div>
+                
+                <button  class="submit_review" id="submit_review" {% if not form.mark %}disabled{% endif %}> Отправить</button>
+            </form>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
 {% block js %}
     <script src="{% static "products/js/product_description.js" %}"></script>
     <script src="{% static "products/js/product_page_description_size.js" %}"></script>
+    <script src="{% static "products/js/star_rating.js" %}"></script>
+    <script src="{% static "products/js/product_review.js" %}"></script>
+    <script src="{% static "products/js/product_rating.js" %}"></script>
+    <script src="{% static "products/js/user_product_rating.js" %}"></script>
 {% endblock js %}
