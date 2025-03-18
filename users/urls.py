@@ -9,5 +9,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('profile/', views.UserProfileView.as_view(), name='profile'),
     path('cart/', views.CartView.as_view(), name='cart'),
-    path('favourites/', views.FavouritesView.as_view(), name='favourites')
+    path('favourites/', views.FavouritesView.as_view(), name='favourites'),
+    path('activate/<uidb64>/<token>', views.ActivateView.as_view(), name='activate'),
+
 ]

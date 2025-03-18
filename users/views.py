@@ -1,15 +1,21 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.views import View
 from django.views.generic import CreateView, TemplateView, UpdateView
 from carts.models import Cart
 from orders.models import Order, OrderItem
 
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
+from users.utils import activate_email
+from .tokens import account_activation_token
 
 class UserLoginView(LoginView):
     form_class = UserLoginForm
@@ -52,12 +58,35 @@ class UserRegistrationView(CreateView):
         user = form.instance
 
         if user:
-            form.save()
-            auth.login(self.request, user)
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            activate_email(self.request, user, form.cleaned_data.get('email'))
+            return redirect("users:registration")
         if session_key:
             Cart.objects.filter(session_key=session_key).update(user=user)
         return HttpResponseRedirect(self.success_url)
 
+class ActivateView(View):
+    template_name = "main/index.html"
+
+    def get(self, request, uidb64, token):
+        User = auth.get_user_model()
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except():
+            user = None
+
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+            return redirect('main:index')
+        else:
+            messages.error(request, "Activation link is invalid!")
+            return redirect('users:registration')
+        
 class UserProfileView(LoginRequiredMixin ,UpdateView):
     template_name = 'users/profile.html'
     form_class = ProfileForm
