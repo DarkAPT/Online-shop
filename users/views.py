@@ -86,7 +86,8 @@ class ActivateView(View):
         else:
             messages.error(request, "Activation link is invalid!")
             return redirect('users:registration')
-        
+
+
 class UserProfileView(LoginRequiredMixin ,UpdateView):
     template_name = 'users/profile.html'
     form_class = ProfileForm

@@ -5,8 +5,10 @@ from users.models import User
 
 class CartQuerySet(models.QuerySet):
 
-    def total_price(self):
+    def total_price(self, is_int=False):
         temp =  sum(cart.product_price_for_carts() for cart in self)
+        if is_int:
+            return temp
         return '{:,}'.format(temp).replace(',', ' ')
 
     def total_quantity(self):

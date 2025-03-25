@@ -1,14 +1,21 @@
+import uuid
 from django.contrib import messages
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.forms import ValidationError
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.views.generic import FormView
-from carts.models import Cart
+from django.urls import reverse, reverse_lazy
+from django.views.generic import FormView, TemplateView
+from yookassa import Configuration, Payment
 
+from carts.models import Cart
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
+
+Configuration.account_id = settings.YOOKASSA_SHOP_ID
+Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
+
 
 class CreateOrderView(LoginRequiredMixin, FormView):
     template_name = "orders/create_order.html"
@@ -54,8 +61,26 @@ class CreateOrderView(LoginRequiredMixin, FormView):
                         product.quantity -= quantity
                         product.save()
 
-                    cart_items.delete()
-                    return redirect('user:profile')
+
+                    idempotence_key = uuid.uuid4()
+                    currency = 'RUB'
+                    description = 'Заказ на сайте'
+                    payment = Payment.create({
+                        "amount": {
+                            "value": str(cart_items.total_price(is_int=True)),
+                            "currency": currency
+                        },
+                        "confirmation": {
+                            "type": "redirect",
+                            "return_url": self.request.build_absolute_uri(reverse('orders:payment_success')),
+                        },
+                        "description": description,
+                        "capture": True,
+                        "test": True,
+                    }, idempotence_key)
+
+                    confirmation_url = payment.confirmation.confirmation_url
+                    return redirect(confirmation_url)
         except ValidationError as e:
             messages.success(self.request, str(e))
             return redirect('orders:create_order')
@@ -68,3 +93,19 @@ class CreateOrderView(LoginRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Оформление заказа"
         return context
+
+
+class PaymentSuccessView(TemplateView):
+    template_name = 'users/profile.html'
+    def dispatch(self, request, *args, **kwargs):
+        user = self.request.user
+        cart_items = Cart.objects.filter(user=user)
+        cart_items.delete()
+        messages.success(request, "Payment Success")
+        return redirect("user:profile")
+
+class PaymentFailedView(TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.error(request, "Payment Failed")
+        return redirect("orders:crete_order")
+    
