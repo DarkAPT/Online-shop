@@ -31,16 +31,14 @@
                         <span>{{ product.name|truncatechars:50 }}</span>
                     </div>
                 </a>
-                {% tag_characteristics_sets as CharacteristicsSet %}
+                {% tag_characteristics_sets product.id as CharacteristicsSet %}
                 {% for property in CharacteristicsSet%}
-                {% if property.productid.id == product.id and property.propertyid.name != "Кол-во вентиляторов"%}
                 <div class="product-param">
                     <div class="p-p">
-                        <i>{{ property.propertyid.name }}:</i>
-                        <p>{{ property.propertyvalueid.value }}</p>
+                        <i>{{ property.propertyid__name }}:</i>
+                        <p>{{ property.propertyvalueid__value }}</p>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </div>
             <div class="product-purchase">

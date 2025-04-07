@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth, messages
@@ -11,6 +12,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, TemplateView, UpdateView
 from carts.models import Cart
+from common.mixins import CacheMixin
 from orders.models import Order, OrderItem
 
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
@@ -61,7 +63,11 @@ class UserRegistrationView(CreateView):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            activate_email(self.request, user, form.cleaned_data.get('email'))
+            email = form.cleaned_data.get('email')
+            domain = get_current_site(self.request).domain
+            protocol = "https" if self.request.is_secure() else "http"
+            activate_email.delay(user.id, email, domain, protocol)
+            messages.success(self.request, "Проверьте почту, чтобы подтвердить аккаунт")
             return redirect("users:registration")
         if session_key:
             Cart.objects.filter(session_key=session_key).update(user=user)
@@ -88,7 +94,7 @@ class ActivateView(View):
             return redirect('users:registration')
 
 
-class UserProfileView(LoginRequiredMixin ,UpdateView):
+class UserProfileView(LoginRequiredMixin,CacheMixin ,UpdateView):
     template_name = 'users/profile.html'
     form_class = ProfileForm
     success_url = reverse_lazy('user:profile')
@@ -96,7 +102,7 @@ class UserProfileView(LoginRequiredMixin ,UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
-        context['orders'] = (
+        orders = (
         Order.objects.filter(user=self.request.user).prefetch_related(
             Prefetch(
                 'orderitem_set',
@@ -105,6 +111,7 @@ class UserProfileView(LoginRequiredMixin ,UpdateView):
         )
         .order_by('-id')
     )
+        context['orders'] = self.set_get_cache(orders, f"user_{self.request.user.id}_orders", 60)
         return context
 
     def get_object(self, queryset=None):

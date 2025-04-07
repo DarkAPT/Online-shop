@@ -56,7 +56,7 @@ class CatalogView(ListView):
         category_slug = self.kwargs.get("category_slug")
 
         context['title'] = Categories.objects.filter(slug = category_slug)[0].name
-        context['properties'] = Properties.objects.filter(categoryid__slug=category_slug)
+        context['properties'] = Properties.objects.filter(categoryid__slug=category_slug).values_list("name", flat=True)
         context["category_slug"] = category_slug
         return context
 

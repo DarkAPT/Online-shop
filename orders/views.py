@@ -12,6 +12,7 @@ from yookassa import Configuration, Payment
 from carts.models import Cart
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
+from orders.tasks import send_order_confirmation_email
 
 Configuration.account_id = settings.YOOKASSA_SHOP_ID
 Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
@@ -101,6 +102,8 @@ class PaymentSuccessView(TemplateView):
         user = self.request.user
         cart_items = Cart.objects.filter(user=user)
         cart_items.delete()
+        order_id = Order.objects.all().filter(user=user).order_by("-id").first().id
+        send_order_confirmation_email.delay(order_id)
         messages.success(request, "Payment Success")
         return redirect("user:profile")
 

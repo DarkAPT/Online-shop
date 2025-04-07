@@ -2,6 +2,7 @@
 {% load static %}
 {% load product_tags %}
 {% load carts_tags %}
+{% load cache %}
 
 {% block title %} {{title}} {% endblock title %}
 
@@ -53,14 +54,14 @@
                             <button class='price_button' type='button'>Фильтр по цене</button>
                         </div>
                     </div>
-                {% for property_name in properties %}
+                    {% cache 300 properties %}
+                    {% for property_name in properties %}
                     <div class="filter">
                         <div class="ft">
-                            <span class="filter-title">{{property_name.name}}</span>
+                            <span class="filter-title">{{property_name}}</span>
                         </div>
-                        {% tag_property_values as property_values %}
+                        {% tag_property_values property_name as property_values %}
                         {% for property_value in property_values %}
-                        {% if property_value.propertyid.name == property_name.name %}
                         <div>
                             <div>
                                 <label>
@@ -72,10 +73,10 @@
                                 </label>
                             </div>
                         </div>
-                        {% endif %}
                         {% endfor %}
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                    {% endcache %}
             </form>
             </div>
             
@@ -136,17 +137,17 @@
                                         <span>{{ product.name|truncatechars:50 }}</span>
                                     </div>
                                 </a>
-                                {% tag_characteristics_sets as CharacteristicsSet %}
+                                {% cache 300 CharacteristicsSet %}
+                                {% tag_characteristics_sets product.id as CharacteristicsSet %}
                                 {% for property in CharacteristicsSet%}
-                                {% if property.productid.id == product.id and property.propertyid.name != "Кол-во вентиляторов"%}
                                 <div class="product-param">
                                     <div class="p-p">
-                                        <i>{{ property.propertyid.name }}:</i>
-                                        <p>{{ property.propertyvalueid.value }}</p>
+                                        <i>{{ property.propertyid__name }}:</i>
+                                        <p>{{ property.propertyvalueid__value }}</p>
                                     </div>
                                 </div>
-                                {% endif %}
                                 {% endfor %}
+                                {% endcache %}
                             </div>
                             <div class="product-purchase">
                                 {% if product.discount != 0%}

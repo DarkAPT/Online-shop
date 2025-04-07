@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
 
     "debug_toolbar",
+    "django_celery_beat",
+    "django_celery_results",
 
     'main',
     'products',
@@ -99,6 +101,14 @@ DATABASES = {
         'PASSWORD': 'shopdb',
         'HOST': 'localhost',
         'PORT': '5432',
+    }
+}
+
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / "cache",
     }
 }
 
@@ -171,7 +181,13 @@ EMAIL_USE_TLS = True
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-
 # ЮКасса
 YOOKASSA_SECRET_KEY = env('YOOKASSA_SECRET_KEY')
 YOOKASSA_SHOP_ID = env('YOOKASSA_SHOP_ID')
+
+# Celery configuration
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_EXTENDED = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
