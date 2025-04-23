@@ -13,16 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import environ
 
-# Инициализация объекта для работы с переменными окружения
-env = environ.Env()
-environ.Env.read_env(env_file='.env')
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_DIR = Path(__file__).resolve().parent.parent.parent
 
-
+env = environ.Env()
+env.read_env(ENV_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -93,16 +89,18 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shopdb',
-        'USER': 'shopdb',
-        'PASSWORD': 'shopdb',
-        'HOST': 'localhost',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),
+        "PORT": env("POSTGRES_PORT", default=5432),
     }
 }
+
 
 # Cache
 CACHES = {
@@ -149,9 +147,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Путь, куда Django будет собирать файлы при команде collectstatic
+STATIC_ROOT = '/static'  # Указывает на директорию, монтируемую в контейнер
+
+# Директории для поиска статических файлов
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / "static",  # Путь в проекте
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 MEDIA_URL = 'media/'
 
